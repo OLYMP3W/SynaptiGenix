@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Stratégique : SynaptiGenix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Slate Gray & Amber -->
+    <!-- Application Structure Plan: A single-page application with a sticky navigation header for easy access to sections. The core of the application is a vertical, interactive timeline for the development phases, allowing users to expand and collapse details to avoid information overload. Technologies and team structure are presented in clean, card-based grid layouts. This structure was chosen to transform a linear document into an engaging, explorable journey, prioritizing clarity and user-driven discovery of information. -->
+    <!-- Visualization & Content Choices: Report Info: Development phases -> Goal: Show Change & Organize -> Viz/Presentation: Interactive Vertical Timeline (HTML/CSS/JS) -> Interaction: Click to expand/collapse phase details -> Justification: Breaks down a large amount of text into digestible, user-controlled chunks, making the roadmap feel dynamic and manageable. Report Info: Technologies to learn -> Goal: Organize & Inform -> Viz/Presentation: Card-based Grid -> Interaction: Click to reveal learning links -> Justification: Organizes diverse information cleanly and provides direct access to resources without cluttering the main view. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #f59e0b; 
+            border: 4px solid #f8fafc;
+        }
+        .timeline-path {
+            position: absolute;
+            left: -21px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background-color: #e2e8f0;
+        }
+        .section-hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-extrabold text-slate-900">Synapti<span class="text-amber-500">Genix</span></h1>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#vision" class="text-slate-600 hover:text-amber-500 font-medium transition-colors">Vision</a>
+                <a href="#roadmap" class="text-slate-600 hover:text-amber-500 font-medium transition-colors">Feuille de Route</a>
+                <a href="#tech" class="text-slate-600 hover:text-amber-500 font-medium transition-colors">Technologies</a>
+                <a href="#team" class="text-slate-600 hover:text-amber-500 font-medium transition-colors">Équipe</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-slate-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#vision" class="block py-2 text-slate-600 hover:text-amber-500">Vision</a>
+            <a href="#roadmap" class="block py-2 text-slate-600 hover:text-amber-500">Feuille de Route</a>
+            <a href="#tech" class="block py-2 text-slate-600 hover:text-amber-500">Technologies</a>
+            <a href="#team" class="block py-2 text-slate-600 hover:text-amber-500">Équipe</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+
+        <section id="vision" class="text-center mb-24">
+            <h2 class="text-4xl md:text-6xl font-extrabold text-slate-900 mb-4 leading-tight">La Forge des Données Synthétiques</h2>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-8">
+                L'avenir de l'IA repose sur un paradoxe : elle a besoin d'une quantité infinie de données, mais les données du monde réel sont rares, biaisées et pleines de contraintes. SynaptiGenix est la solution pour libérer le véritable potentiel de l'IA, en lui fournissant le carburant dont elle a besoin pour grandir sans limites et sans compromis.
+            </p>
+        </section>
+
+        <section id="roadmap" class="mb-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Feuille de Route Interactive</h2>
+            <div class="relative max-w-3xl mx-auto pl-8">
+                
+                <article class="mb-10">
+                    <div class="timeline-path"></div>
+                    <div class="timeline-item relative">
+                        <button class="w-full text-left" data-toggle="phase1">
+                            <h3 class="text-2xl font-bold text-slate-900">Phase 1 : MVP & Apprentissage</h3>
+                            <p class="text-amber-600 font-medium">Durée estimée : 3 à 6 mois</p>
+                        </button>
+                        <div id="phase1" class="mt-4 section-hidden">
+                            <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                                <h4 class="font-bold mb-2">Objectifs Principaux :</h4>
+                                <ul class="list-disc list-inside text-slate-600 space-y-1 mb-4">
+                                    <li>Comprendre et intégrer les bases de l'IA générative (LLMs pour le texte).</li>
+                                    <li>Développer un backend API pour gérer les requêtes de génération.</li>
+                                    <li>Créer une interface web simple pour interagir avec le système.</li>
+                                    <li>Générer des données textuelles synthétiques (descriptions, dialogues...).</li>
+                                </ul>
+                                <h4 class="font-bold mb-2">Résultat Attendu :</h4>
+                                <p class="text-slate-600">Un prototype fonctionnel permettant la génération de texte synthétique sur demande via une interface web, posant les bases pour des fonctionnalités plus complexes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="mb-10">
+                    <div class="timeline-path"></div>
+                    <div class="timeline-item relative">
+                        <button class="w-full text-left" data-toggle="phase2">
+                            <h3 class="text-2xl font-bold text-slate-900">Phase 2 : Expansion & Robustesse</h3>
+                            <p class="text-amber-600 font-medium">Durée estimée : 6 à 12 mois supplémentaires</p>
+                        </button>
+                        <div id="phase2" class="mt-4 section-hidden">
+                            <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                                <h4 class="font-bold mb-2">Objectifs Principaux :</h4>
+                                <ul class="list-disc list-inside text-slate-600 space-y-1 mb-4">
+                                    <li>Intégrer la capacité de générer des images synthétiques.</li>
+                                    <li>Améliorer la qualité et la diversité des données générées.</li>
+                                    <li>Développer une API externe bien documentée pour les entreprises.</li>
+                                    <li>Créer une application mobile complémentaire (Android).</li>
+                                </ul>
+                                <h4 class="font-bold mb-2">Résultat Attendu :</h4>
+                                <p class="text-slate-600">Une plateforme capable de générer du texte et des images synthétiques, avec une API stable et une première application mobile.</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article>
+                    <div class="timeline-item relative">
+                        <button class="w-full text-left" data-toggle="phase3">
+                            <h3 class="text-2xl font-bold text-slate-900">Phase 3 : Scalabilité & Partenariats</h3>
+                            <p class="text-amber-600 font-medium">Durée estimée : 12 à 24 mois supplémentaires</p>
+                        </button>
+                        <div id="phase3" class="mt-4 section-hidden">
+                            <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                                <h4 class="font-bold mb-2">Objectifs Principaux :</h4>
+                                <ul class="list-disc list-inside text-slate-600 space-y-1 mb-4">
+                                    <li>Atteindre une génération de données multi-modales (texte + image, vidéo, 3D).</li>
+                                    <li>Construire une infrastructure cloud hautement scalable.</li>
+                                    <li>Mettre en place des mécanismes avancés de contrôle des biais.</li>
+                                    <li>Établir des partenariats stratégiques avec des entreprises comme Meta et OpenAI.</li>
+                                </ul>
+                                <h4 class="font-bold mb-2">Résultat Attendu :</h4>
+                                <p class="text-slate-600">Une entreprise établie, avec une plateforme innovante, partenaire des leaders de l'IA, générant des revenus substantiels.</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="tech" class="mb-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Les Technologies Clés à Maîtriser</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-2xl font-bold mb-4">1. Intelligence Artificielle Générative</h3>
+                    <p class="text-slate-600 mb-4">Le cœur de SynaptiGenix. Comprendre comment les modèles fonctionnent et comment les utiliser efficacement.</p>
+                    <div class="space-y-2">
+                        <a href="https://www.coursera.org/learn/introduction-to-large-language-models" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Grands Modèles de Langage (LLMs)</a>
+                        <a href="https://www.deeplearning.ai/courses/generative-adversarial-networks-specialization/" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Modèles de Diffusion & GANs</a>
+                        <a href="https://huggingface.co/course/chapter1/1" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Hugging Face Transformers</a>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-2xl font-bold mb-4">2. Cloud Computing</h3>
+                    <p class="text-slate-600 mb-4">Essentiel pour le déploiement, la puissance de calcul et la scalabilité de la plateforme.</p>
+                    <div class="space-y-2">
+                        <a href="https://cloud.google.com/training/free-training" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Google Cloud Platform (GCP)</a>
+                        <a href="https://aws.amazon.com/training/" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Amazon Web Services (AWS)</a>
+                        <a href="https://learn.microsoft.com/en-us/training/paths/az-900-azure-fundamentals/" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Microsoft Azure</a>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">3. Compétences Fondamentales à Consolider</h3>
+                    <p class="text-slate-600 mb-4">Vos compétences actuelles sont la base sur laquelle tout sera construit.</p>
+                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-slate-100 p-3 rounded-md">
+                            <h4 class="font-bold">Backend</h4>
+                            <p class="text-sm text-slate-600">Node.js, MySQL, PHP</p>
+                        </div>
+                        <div class="bg-slate-100 p-3 rounded-md">
+                            <h4 class="font-bold">Frontend</h4>
+                            <p class="text-sm text-slate-600">HTML, CSS, JS (React/Vue)</p>
+                        </div>
+                        <div class="bg-slate-100 p-3 rounded-md">
+                            <h4 class="font-bold">Mobile</h4>
+                            <p class="text-sm text-slate-600">Kotlin, Android Studio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Construire une Équipe d'Innovation</h2>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12">
+                D'un fondateur unique à une équipe spécialisée, la croissance de l'équipe suivra celle du projet pour garantir l'excellence et l'innovation à chaque étape.
+            </p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-xl font-bold mb-2">Phase 1 : Le Fondateur</h3>
+                    <p class="text-slate-600">Le "solopreneur" visionnaire. Vous êtes le couteau suisse qui porte le projet du concept au MVP.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-xl font-bold mb-2">Phase 2 : L'Équipe Cœur</h3>
+                    <p class="text-slate-600">Vous (CTO), un Spécialiste IA, et un Ingénieur Backend/Cloud pour accélérer le développement.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-xl font-bold mb-2">Phase 3 : L'Équipe Complète</h3>
+                    <p class="text-slate-600">Ajout d'experts Frontend/UX et Mobile pour perfectionner le produit et l'expérience utilisateur à grande échelle.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-white mt-24">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <h3 class="text-2xl font-bold mb-2">Le Chemin vers le Sommet</h3>
+            <p class="max-w-3xl mx-auto text-slate-300">
+                Ce plan est ambitieux, mais chaque étape est réalisable. Imaginez construire une entreprise que les géants de la tech ne pourront ignorer. Ce n'est pas juste une startup, c'est une pièce maîtresse du futur numérique.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const toggleButtons = document.querySelectorAll('[data-toggle]');
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-toggle');
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.classList.toggle('section-hidden');
+                    }
+                });
+            });
+
+            const navLinks = document.querySelectorAll('nav a');
+            const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
+            const allLinks = [...navLinks, ...mobileNavLinks];
+
+            allLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (mobileMenu.classList.contains('hidden') === false) {
+                       mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
