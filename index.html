@@ -1,255 +1,776 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan Stratégique : SynaptiGenix</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chosen Palette: Slate Gray & Amber -->
-    <!-- Application Structure Plan: A single-page application with a sticky navigation header for easy access to sections. The core of the application is a vertical, interactive timeline for the development phases, allowing users to expand and collapse details to avoid information overload. Technologies and team structure are presented in clean, card-based grid layouts. This structure was chosen to transform a linear document into an engaging, explorable journey, prioritizing clarity and user-driven discovery of information. -->
-    <!-- Visualization & Content Choices: Report Info: Development phases -> Goal: Show Change & Organize -> Viz/Presentation: Interactive Vertical Timeline (HTML/CSS/JS) -> Interaction: Click to expand/collapse phase details -> Justification: Breaks down a large amount of text into digestible, user-controlled chunks, making the roadmap feel dynamic and manageable. Report Info: Technologies to learn -> Goal: Organize & Inform -> Viz/Presentation: Card-based Grid -> Interaction: Click to reveal learning links -> Justification: Organizes diverse information cleanly and provides direct access to resources without cluttering the main view. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
-        .timeline-item:before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #f59e0b; 
-            border: 4px solid #f8fafc;
-        }
-        .timeline-path {
-            position: absolute;
-            left: -21px;
-            top: 20px;
-            width: 2px;
-            height: calc(100% - 20px);
-            background-color: #e2e8f0;
-        }
-        .section-hidden {
-            display: none;
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SynaptiGenix | Données Synthétiques Autonomes et Évolutives</title>
+<meta name="description" content="SynaptiGenix — Plateforme multi-modale de données synthétiques avec validation Jarris. Fiabilité, scalabilité et conformité pour l'IA." />
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:," />
+<!-- Tailwind for quick layout + our lightweight CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<style>
+  :root{
+    --bg:#000;
+    /* Ajusté pour un meilleur contraste */
+    --card:#0F0F0F;
+    --muted:#BBBBBB;
+    --line:#222222;
+    --white:#FFFFFF;
+    --accent: #FFFFFF;
+  }
+  html,body{height:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:var(--bg);
+    color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+    margin:0;
+  }
+  a { color:inherit; }
+  .text-subtle{ color:var(--muted); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; }
+  
+  /* Mise en page de base */
+  .hero { padding:3.5rem 1rem; display:flex; flex-wrap:wrap; gap:2rem; align-items:center; max-width:1200px; margin:0 auto; }
+  .hero-left { flex:1 1 420px; min-width:260px; }
+  .hero-right { flex:0 0 560px; min-width:280px; }
+
+  .title { font-weight:900; font-size:clamp(1.8rem,5vw,3.6rem); line-height:1.02; letter-spacing:-0.6px; }
+  .sub { font-size:1.05rem; color:var(--muted); margin-top:.6rem; }
+  
+  /* Image en monochrome avec animation améliorée */
+  .mono-img { 
+    filter:grayscale(100%) brightness(1.05); 
+    transition:filter .5s cubic-bezier(.2,.9,.3,1), transform .5s cubic-bezier(.2,.9,.3,1); 
+    border-radius:10px; 
+    will-change: transform, filter;
+  }
+  .mono-img:hover{ 
+    filter:grayscale(0%) brightness(1.1); 
+    transform:translateY(-4px) scale(1.01); 
+  }
+
+  /* Video */
+  .video-box { border-radius:14px; overflow:hidden; position:relative; border:1px solid rgba(255,255,255,0.03); box-shadow:0 15px 50px rgba(0,0,0,0.6); }
+  .video-wrap{ position:relative; padding-bottom:56.25%; height:0; }
+  .video-wrap iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+
+  /* Animated SVG layer */
+  .data-wave { position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen; opacity:0.25; }
+
+  /* Grid */
+  .grid-3 { display:grid; grid-template-columns:1fr; gap:1.5rem; }
+  @media(min-width:640px){ .grid-3{ grid-template-columns:repeat(2,1fr); } }
+  @media(min-width:1024px){ .grid-3{ grid-template-columns:repeat(3,1fr); } }
+
+  /* Roadmap - Amélioration du contraste */
+  .roadmap { display:flex; gap:1.5rem; overflow:auto; padding:1.5rem 0; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
+  .roadmap .item { 
+    min-width:280px; 
+    scroll-snap-align:start; 
+    padding:1.2rem; 
+    border-radius:12px; 
+    flex:0 0 auto; 
+    border:1px solid var(--line); 
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    transition: background-color 0.3s;
+  }
+  .roadmap .item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  .road-dot { width:14px; height:14px; background:var(--white); border-radius:50%; border:3px solid #000; box-shadow:0 0 0 6px rgba(255,255,255,0.05); }
+
+  /* Team - Correction de l'ordre pour l'aside */
+  .team-grid { 
+    display: flex;
+    flex-direction: column; 
+    gap: 1rem; 
+    align-items: center; 
+    text-align: center;
+  }
+  .avatar-placeholder { width:180px;height:180px;border-radius:12px;background:linear-gradient(180deg,#0b0b0b,#141414);display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700; }
+  
+  @media(min-width:768px){ 
+    .team-grid{ 
+        display: grid; 
+        grid-template-columns: 1fr; /* Garder en colonne sur desktop pour cette carte */
+        align-items: start;
+        text-align: left;
+    }
+    .team-grid .avatar-placeholder { margin: 0; }
+  }
+
+
+  /* New Team Member Card Styling (Section détaillée) */
+  .team-member {
+    transition: transform 0.4s cubic-bezier(.2,.9,.3,1), box-shadow 0.4s;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.5rem;
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .team-member:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+  }
+  .team-member img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.5s;
+    margin-bottom: 1rem;
+    border: 3px solid rgba(255, 255, 255, 0.05);
+  }
+  .team-member:hover img {
+    filter: grayscale(0%);
+  }
+
+  /* FAQ accordion */
+  .faq-item { border-bottom:1px solid var(--line); padding:1rem 0; }
+  .faq-question { display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:0.6rem; transition:color 0.2s; }
+  .faq-question:hover { color: var(--white); }
+  .faq-answer { max-height:0; overflow:hidden; transition:max-height .5s ease-in-out, padding .5s ease-in-out; }
+
+  /* Modal */
+  .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:60; }
+  .modal { max-width:720px; width:94%; background:var(--card); border:1px solid var(--line); padding:1.5rem; border-radius:12px; }
+
+  /* ANIMATION DE RÉVÉLATION AMÉLIORÉE (Mouvement plus puissant) */
+  .reveal { 
+    opacity:0; 
+    transform:translateY(30px); /* Déplacement plus important */
+    /* Courbe plus rapide au début, plus douce à la fin (cubic-bezier(.2,1,.3,1) */
+    transition:opacity .8s cubic-bezier(.2,1,.3,1), transform .8s cubic-bezier(.2,1,.3,1); 
+  }
+  .reveal.show { 
+    opacity:1; 
+    transform:none; 
+  }
+
+  /* NOUVELLE CLASSE POUR L'EFFET CASCADE (Stagger) */
+  .stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(.2,1,.3,1), transform 0.6s cubic-bezier(.2,1,.3,1);
+  }
+  /* Les délais seront gérés par le JavaScript */
+  .stagger-item.show {
+      opacity: 1;
+      transform: translateY(0);
+  }
+
+
+  /* misc */
+  .hover-lift { transition:transform .3s cubic-bezier(.2,.9,.3,1); will-change:transform; }
+  .hover-lift:hover{ transform:translateY(-6px) scale(1.01); }
+  footer { border-top:1px solid var(--line); padding:1.25rem 1rem; }
+  .btn-white { background:#fff;color:#000;padding:.5rem .9rem;border-radius:999px;font-weight:800;display:inline-flex;align-items:center;gap:.6rem;transition:opacity 0.2s; }
+  .btn-white:hover { opacity:0.9; }
+  .btn-ghost { border:1px solid var(--line); padding:.5rem .8rem;border-radius:999px;color:var(--muted);transition:border-color 0.2s, color 0.2s; }
+  .btn-ghost:hover { border-color:var(--white); color:var(--white); }
+  .btn-portfolio { background:rgba(255,255,255,0.05); color:var(--white); padding:.4rem 1rem; border-radius:999px; font-weight:600; transition:background 0.3s, box-shadow 0.3s; }
+  .btn-portfolio:hover { background:rgba(255,255,255,0.1); box-shadow:0 0 10px rgba(255,255,255,0.15); }
+
+
+  /* accessibility focus */
+  a:focus, button:focus, input:focus, textarea:focus { outline: 3px solid rgba(255,255,255,0.15); outline-offset:3px; }
+
+  @media(max-width:520px){
+    .hero-right { order:-1; }
+    .avatar-placeholder { width:140px;height:140px; }
+  }
+  
+  /* Keyframes pour la notification */
+  @keyframes slideIn { 
+    from { transform: translate(100%, 100%); opacity: 0; } 
+    to { transform: translate(0, 0); opacity: 1; } 
+  }
+</style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="antialiased">
 
-    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-extrabold text-slate-900">Synapti<span class="text-amber-500">Genix</span></h1>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#vision" class="text-slate-600 hover:text-amber-500 font-medium transition-colors">Vision</a>
-                <a href="#roadmap" class="text-slate-600 hover:text-amber-500 font-medium transition-colors">Feuille de Route</a>
-                <a href="#tech" class="text-slate-600 hover:text-amber-500 font-medium transition-colors">Technologies</a>
-                <a href="#team" class="text-slate-600 hover:text-amber-500 font-medium transition-colors">Équipe</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden text-slate-800">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
+<!-- NAV -->
+<header class="sticky top-0 z-50" style="backdrop-filter:blur(6px); background:linear-gradient(180deg, rgba(0,0,0,0.88), rgba(0,0,0,0.78));">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div style="width:10px;height:10px;background:#fff;border-radius:999px;"></div>
+      <a href="#" class="font-extrabold text-lg reveal" style="transition-delay: 0.1s;">Synapti<span class="text-subtle">Genix</span></a>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-6 text-subtle">
+      <!-- Les liens de nav utilisent 'reveal' avec un stagger delay -->
+      <a href="#pitch" class="hover:text-white reveal" style="transition-delay: 0.2s;">Pourquoi</a>
+      <a href="#domaines" class="hover:text-white reveal" style="transition-delay: 0.3s;">Domaines</a>
+      <a href="#team" class="hover:text-white reveal" style="transition-delay: 0.4s;">Équipe</a> 
+      <a href="#roadmap" class="hover:text-white reveal" style="transition-delay: 0.5s;">Roadmap</a>
+      <a href="#blog" class="hover:text-white reveal" style="transition-delay: 0.6s;">Blog</a>
+      <a href="#inscription-dev" class="btn-white reveal" style="transition-delay: 0.7s;">ACCÈS DEV</a>
+    </nav>
+
+    <div class="md:hidden">
+      <button id="mobile-toggle" aria-label="ouvrir menu" class="text-white text-2xl" onclick="toggleMobile()"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="px-4 pb-3 md:hidden" style="display:none;">
+    <a href="#pitch" class="block py-2 text-white">Pourquoi</a>
+    <a href="#domaines" class="block py-2 text-white">Domaines</a>
+    <a href="#team" class="block py-2 text-white">Équipe</a>
+    <a href="#roadmap" class="block py-2 text-white">Roadmap</a>
+    <a href="#blog" class="block py-2 text-white">Blog</a>
+    <a href="#inscription-dev" class="block mt-2 py-2 text-center bg-white text-black rounded-full">ACCÈS DEV</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" role="region" aria-label="Hero section">
+    <div class="hero-left reveal">
+      <p class="text-subtle uppercase tracking-widest text-xs mb-3">LE FUTUR DE L'AUTO-AMÉLIORATION SYSTÉMIQUE</p>
+      <h1 class="title">SynaptiGenix — Données synthétiques fiables pour IA</h1>
+      <p class="sub">Plateforme multi-modale (vidéo, 3D, texte, audio) couplée à Jarris, notre couche d'auto-validation — pour des datasets auditables, reproductibles et conformes.</p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="#video" class="btn-white">
+          <i class="fas fa-play-circle"></i> Voir la démo
+        </a>
+        <a href="#inscription-dev" class="btn-ghost">Demander un accès</a>
+      </div>
+
+      <!-- Hero features using stagger-item for cascade effect -->
+      <div class="mt-6 grid grid-cols-2 gap-3">
+        <div class="card p-3 hover-lift stagger-item" data-delay="0.1">
+          <strong class="block">Auto-validation</strong>
+          <small class="text-subtle">Jarris — métriques auditable</small>
+          <div class="mt-2"><a href="#" onclick="openModal('jarris')" class="text-white font-semibold">En savoir plus →</a></div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-            <a href="#vision" class="block py-2 text-slate-600 hover:text-amber-500">Vision</a>
-            <a href="#roadmap" class="block py-2 text-slate-600 hover:text-amber-500">Feuille de Route</a>
-            <a href="#tech" class="block py-2 text-slate-600 hover:text-amber-500">Technologies</a>
-            <a href="#team" class="block py-2 text-slate-600 hover:text-amber-500">Équipe</a>
+        <div class="card p-3 hover-lift stagger-item" data-delay="0.2">
+          <strong class="block">Multimodal</strong>
+          <small class="text-subtle">Vidéo • 3D • Texte • Audio</small>
+          <div class="mt-2"><a href="#" onclick="openModal('orphee')" class="text-white font-semibold">En savoir plus →</a></div>
         </div>
-    </header>
+      </div>
+    </div>
 
-    <main class="container mx-auto px-6 py-12 md:py-20">
+    <div id="video" class="hero-right card video-box reveal" style="transition-delay: 0.3s;" aria-hidden="false">
+      <!-- animated decorative SVG layer -->
+      <svg class="data-wave" viewBox="0 0 800 450" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#00d4ff" stop-opacity="0.55"/><stop offset="1" stop-color="#8a67ff" stop-opacity="0.55"/></linearGradient></defs>
+        <path d="M0,300 C150,200 350,380 800,240 L800,450 L0,450 Z" fill="url(#g1)">
+          <animate attributeName="d" dur="12s" repeatCount="indefinite"
+            values="M0,300 C150,200 350,380 800,240 L800,450 L0,450 Z;
+                    M0,320 C150,260 350,300 800,260 L800,450 L0,450 Z;
+                    M0,300 C150,220 350,360 800,240 L800,450 L0,450 Z"/>
+        </path>
+      </svg>
 
-        <section id="vision" class="text-center mb-24">
-            <h2 class="text-4xl md:text-6xl font-extrabold text-slate-900 mb-4 leading-tight">La Forge des Données Synthétiques</h2>
-            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                L'avenir de l'IA repose sur un paradoxe : elle a besoin d'une quantité infinie de données, mais les données du monde réel sont rares, biaisées et pleines de contraintes. SynaptiGenix est la solution pour libérer le véritable potentiel de l'IA, en lui fournissant le carburant dont elle a besoin pour grandir sans limites et sans compromis.
-            </p>
-        </section>
+      <div class="video-wrap">
+        <!-- Video intégrée (remplacer si tu veux une autre) -->
+        <iframe loading="lazy"
+                src="https://www.youtube.com/embed/FGqfKL1gcvU"
+                title="AI's Secret Ingredient: Synthetic Data Explained"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <p class="text-subtle p-3">Vidéo pédagogique sur l'importance des données synthétiques pour l’entraînement des IA.</p>
+    </div>
+  </section>
 
-        <section id="roadmap" class="mb-24">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Feuille de Route Interactive</h2>
-            <div class="relative max-w-3xl mx-auto pl-8">
-                
-                <article class="mb-10">
-                    <div class="timeline-path"></div>
-                    <div class="timeline-item relative">
-                        <button class="w-full text-left" data-toggle="phase1">
-                            <h3 class="text-2xl font-bold text-slate-900">Phase 1 : MVP & Apprentissage</h3>
-                            <p class="text-amber-600 font-medium">Durée estimée : 3 à 6 mois</p>
-                        </button>
-                        <div id="phase1" class="mt-4 section-hidden">
-                            <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
-                                <h4 class="font-bold mb-2">Objectifs Principaux :</h4>
-                                <ul class="list-disc list-inside text-slate-600 space-y-1 mb-4">
-                                    <li>Comprendre et intégrer les bases de l'IA générative (LLMs pour le texte).</li>
-                                    <li>Développer un backend API pour gérer les requêtes de génération.</li>
-                                    <li>Créer une interface web simple pour interagir avec le système.</li>
-                                    <li>Générer des données textuelles synthétiques (descriptions, dialogues...).</li>
-                                </ul>
-                                <h4 class="font-bold mb-2">Résultat Attendu :</h4>
-                                <p class="text-slate-600">Un prototype fonctionnel permettant la génération de texte synthétique sur demande via une interface web, posant les bases pour des fonctionnalités plus complexes.</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+  <!-- WHY / FEATURES -->
+  <section id="pitch" class="max-w-7xl mx-auto px-4 py-10">
+    <div class="flex flex-wrap gap-6">
+      <div class="flex-1 min-w-[260px]">
+        <h2 class="text-2xl font-extrabold reveal">Pourquoi SynaptiGenix ?</h2>
+        <p class="text-subtle mt-2 max-w-xl reveal">Nous transformons contraintes en opportunités : rapidité d'itération, protection des données sensibles, et fiabilité statistique. Conçu pour la production.</p>
 
-                <article class="mb-10">
-                    <div class="timeline-path"></div>
-                    <div class="timeline-item relative">
-                        <button class="w-full text-left" data-toggle="phase2">
-                            <h3 class="text-2xl font-bold text-slate-900">Phase 2 : Expansion & Robustesse</h3>
-                            <p class="text-amber-600 font-medium">Durée estimée : 6 à 12 mois supplémentaires</p>
-                        </button>
-                        <div id="phase2" class="mt-4 section-hidden">
-                            <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
-                                <h4 class="font-bold mb-2">Objectifs Principaux :</h4>
-                                <ul class="list-disc list-inside text-slate-600 space-y-1 mb-4">
-                                    <li>Intégrer la capacité de générer des images synthétiques.</li>
-                                    <li>Améliorer la qualité et la diversité des données générées.</li>
-                                    <li>Développer une API externe bien documentée pour les entreprises.</li>
-                                    <li>Créer une application mobile complémentaire (Android).</li>
-                                </ul>
-                                <h4 class="font-bold mb-2">Résultat Attendu :</h4>
-                                <p class="text-slate-600">Une plateforme capable de générer du texte et des images synthétiques, avec une API stable et une première application mobile.</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+        <div class="grid-3 mt-6">
+          <article class="card hover-lift p-4 stagger-item" data-delay="0.1">
+            <img class="mono-img w-full h-40 object-cover mb-3" src="https://images.unsplash.com/photo-1542831371-d531d36971e6?auto=format&fit=crop&w=1200&q=60" alt="Fiabilité" loading="lazy">
+            <h3 class="font-bold">Fiabilité mesurable</h3>
+            <p class="text-subtle mt-1">Jarris publie métriques, rapports et tests d'audit pour chaque dataset.</p>
+            <div><a href="Fiabilitémesurable.html" class="text-white font-semibold">En savoir plus →</a></div>
+          </article>
 
-                <article>
-                    <div class="timeline-item relative">
-                        <button class="w-full text-left" data-toggle="phase3">
-                            <h3 class="text-2xl font-bold text-slate-900">Phase 3 : Scalabilité & Partenariats</h3>
-                            <p class="text-amber-600 font-medium">Durée estimée : 12 à 24 mois supplémentaires</p>
-                        </button>
-                        <div id="phase3" class="mt-4 section-hidden">
-                            <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
-                                <h4 class="font-bold mb-2">Objectifs Principaux :</h4>
-                                <ul class="list-disc list-inside text-slate-600 space-y-1 mb-4">
-                                    <li>Atteindre une génération de données multi-modales (texte + image, vidéo, 3D).</li>
-                                    <li>Construire une infrastructure cloud hautement scalable.</li>
-                                    <li>Mettre en place des mécanismes avancés de contrôle des biais.</li>
-                                    <li>Établir des partenariats stratégiques avec des entreprises comme Meta et OpenAI.</li>
-                                </ul>
-                                <h4 class="font-bold mb-2">Résultat Attendu :</h4>
-                                <p class="text-slate-600">Une entreprise établie, avec une plateforme innovante, partenaire des leaders de l'IA, générant des revenus substantiels.</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
+          <article class="card hover-lift p-4 stagger-item" data-delay="0.2">
+            <img class="mono-img w-full h-40 object-cover mb-3" src="images/23ffea3b-827f-4d3d-9bde-63d5240ee454_Blog-2022.png" alt="Confidentialité" loading="lazy">
+            <h3 class="font-bold">Confidentialité & conformité</h3>
+            <p class="text-subtle mt-1">Aucun PII injecté, traçabilité et contrôles d'accès sectoriels (RGPD/HIPAA).</p>
+            <div class="mt-3"><a href="Confidentialité.html" onclick="openModal('privacy')" class="text-white font-semibold">En savoir plus →</a></div>
+          </article>
 
-        <section id="tech" class="mb-24">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Les Technologies Clés à Maîtriser</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
-                    <h3 class="text-2xl font-bold mb-4">1. Intelligence Artificielle Générative</h3>
-                    <p class="text-slate-600 mb-4">Le cœur de SynaptiGenix. Comprendre comment les modèles fonctionnent et comment les utiliser efficacement.</p>
-                    <div class="space-y-2">
-                        <a href="https://www.coursera.org/learn/introduction-to-large-language-models" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Grands Modèles de Langage (LLMs)</a>
-                        <a href="https://www.deeplearning.ai/courses/generative-adversarial-networks-specialization/" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Modèles de Diffusion & GANs</a>
-                        <a href="https://huggingface.co/course/chapter1/1" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Hugging Face Transformers</a>
-                    </div>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
-                    <h3 class="text-2xl font-bold mb-4">2. Cloud Computing</h3>
-                    <p class="text-slate-600 mb-4">Essentiel pour le déploiement, la puissance de calcul et la scalabilité de la plateforme.</p>
-                    <div class="space-y-2">
-                        <a href="https://cloud.google.com/training/free-training" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Google Cloud Platform (GCP)</a>
-                        <a href="https://aws.amazon.com/training/" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Amazon Web Services (AWS)</a>
-                        <a href="https://learn.microsoft.com/en-us/training/paths/az-900-azure-fundamentals/" target="_blank" class="block bg-slate-100 p-3 rounded-md hover:bg-amber-100 transition-colors">Microsoft Azure</a>
-                    </div>
-                </div>
-                 <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200 md:col-span-2">
-                    <h3 class="text-2xl font-bold mb-4">3. Compétences Fondamentales à Consolider</h3>
-                    <p class="text-slate-600 mb-4">Vos compétences actuelles sont la base sur laquelle tout sera construit.</p>
-                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="bg-slate-100 p-3 rounded-md">
-                            <h4 class="font-bold">Backend</h4>
-                            <p class="text-sm text-slate-600">Node.js, MySQL, PHP</p>
-                        </div>
-                        <div class="bg-slate-100 p-3 rounded-md">
-                            <h4 class="font-bold">Frontend</h4>
-                            <p class="text-sm text-slate-600">HTML, CSS, JS (React/Vue)</p>
-                        </div>
-                        <div class="bg-slate-100 p-3 rounded-md">
-                            <h4 class="font-bold">Mobile</h4>
-                            <p class="text-sm text-slate-600">Kotlin, Android Studio</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="team" class="text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">Construire une Équipe d'Innovation</h2>
-            <p class="text-lg text-slate-600 max-w-3xl mx-auto mb-12">
-                D'un fondateur unique à une équipe spécialisée, la croissance de l'équipe suivra celle du projet pour garantir l'excellence et l'innovation à chaque étape.
-            </p>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
-                    <h3 class="text-xl font-bold mb-2">Phase 1 : Le Fondateur</h3>
-                    <p class="text-slate-600">Le "solopreneur" visionnaire. Vous êtes le couteau suisse qui porte le projet du concept au MVP.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
-                    <h3 class="text-xl font-bold mb-2">Phase 2 : L'Équipe Cœur</h3>
-                    <p class="text-slate-600">Vous (CTO), un Spécialiste IA, et un Ingénieur Backend/Cloud pour accélérer le développement.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
-                    <h3 class="text-xl font-bold mb-2">Phase 3 : L'Équipe Complète</h3>
-                    <p class="text-slate-600">Ajout d'experts Frontend/UX et Mobile pour perfectionner le produit et l'expérience utilisateur à grande échelle.</p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-slate-900 text-white mt-24">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <h3 class="text-2xl font-bold mb-2">Le Chemin vers le Sommet</h3>
-            <p class="max-w-3xl mx-auto text-slate-300">
-                Ce plan est ambitieux, mais chaque étape est réalisable. Imaginez construire une entreprise que les géants de la tech ne pourront ignorer. Ce n'est pas juste une startup, c'est une pièce maîtresse du futur numérique.
-            </p>
+          <article class="card hover-lift p-4 stagger-item" data-delay="0.3">
+            <img class="mono-img w-full h-40 object-cover mb-3" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=60" alt="Scalabilité" loading="lazy">
+            <h3 class="font-bold">Scalabilité industrielle</h3>
+            <p class="text-subtle mt-1">Pipelines reproducibles pensés pour montée à l'échelle Petabyte.</p>
+            <div class="mt-3"><a href="Scalabilitéindustrielle.html" onclick="openModal('scale')" class="text-white font-semibold">En savoir plus →</a></div>
+          </article>
         </div>
-    </footer>
+      </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
+      <!-- team + KPI aside -->
+      <aside class="w-full md:w-80 reveal" style="transition-delay: 0.4s;">
+        <!-- Cette carte a été ré-ordonnée par CSS/Flexbox pour la clarté -->
+        <div class="card p-4 mb-4">
+          <h4 class="font-bold mb-2">Équipe Fondatrice</h4>
+          <div class="team-grid items-center">
+            <div class="avatar-placeholder" id="avatarBox" title="Ajouter une image"><span>Olympe Ambellit</span></div>
+            <div>
+              <strong class="block text-lg mt-3 md:mt-0">Olympe Ambellit</strong>
+              <small class="text-subtle">Fondateur & CEO</small>
+              <p class="text-subtle mt-3">« L’innovation n’est pas un choix, c’est une mission. »</p>
+              <!-- Lien vers la section détaillée de l'équipe -->
+              <div class="mt-3"><a href="#team" class="btn-ghost">Voir l'équipe complète</a></div> 
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-4">
+          <h4 class="font-bold">Chiffres clés</h4>
+          <ul class="text-subtle mt-3 space-y-2">
+            <li><strong>99.8%</strong> fiabilité visée</li>
+            <li><strong>PB</strong> architecture prévue</li>
+            <li><strong>+15</strong> partenariats ciblés 2026</li>
+          </ul>
+          <div class="mt-3"><a href="#roadmap" class="btn-ghost">Voir roadmap</a></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- DOMAINES -->
+  <section id="domaines" class="max-w-7xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-extrabold reveal">Impact sectoriel</h2>
+    <p class="text-subtle mt-2 reveal">Applications critiques où nous apportons une vraie valeur.</p>
+
+    <div class="grid-3 mt-6">
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.1">
+        <img class="mono-img w-full h-40 object-cover rounded-md mb-3" src="Images/6f6cc26b-9eca-5164-89a2-8b11bab4403d.jpg" alt="Médecine" loading="lazy">
+        <h3 class="font-bold">Médecine & BioTech</h3>
+        <p class="text-subtle mt-1">Scans synthétiques pour pathologies rares, sans dévoiler PII.</p>
+        <div class="mt-3"><a href="Médecine & BioTech.html" onclick="openModal('med')" class="text-white font-semibold">En savoir plus →</a></div>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.2">
+        <img class="mono-img w-full h-40 object-cover rounded-md mb-3" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=60" alt="Autonomie" loading="lazy">
+        <h3 class="font-bold">Véhicules autonomes</h3>
+        <p class="text-subtle mt-1">Scénarios extrêmes, LiDAR synthétique et annotation parfaite.</p>
+        <div class="mt-3"><a href="Véhicules autonomes.html" onclick="openModal('auton')" class="text-white font-semibold">En savoir plus →</a></div>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.3">
+        <img class="mono-img w-full h-40 object-cover rounded-md mb-3" src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1200&q=60" alt="Jeux" loading="lazy">
+        <h3 class="font-bold">Jeux & Média</h3>
+        <p class="text-subtle mt-1">Assets 3D / audio / dialogues validés sémantiquement pour la production.</p>
+        <div class="mt-3"><a href="Jeux & Média.html" onclick="openModal('games')" class="text-white font-semibold">En savoir plus →</a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- MISSION & VISION -->
+  <section class="max-w-7xl mx-auto px-4 py-10">
+    <div class="card p-6 reveal">
+      <h2 class="text-2xl font-extrabold">Mission & Vision</h2>
+      <p class="text-subtle mt-2 max-w-3xl">Notre mission est d’offrir aux équipes IA des datasets synthétiques éthiques, fiables et reproductibles afin d’accélérer l’IA responsable en production. Nous visons une transparence totale des métriques et la conformité sectorielle.</p>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="max-w-7xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-extrabold reveal">Feuille de route</h2>
+    <p class="text-subtle mt-2 reveal">Jalons publics et priorités produit.</p>
+
+    <div class="roadmap mt-6">
+      <!-- Roadmap items use stagger-item -->
+      <div class="item stagger-item" data-delay="0.1">
+        <div class="flex items-center gap-3 mb-3"><div class="road-dot"></div><strong>Q4 2026</strong></div>
+        <div class="text-subtle mb-3">Alpha public Jarris — API d'audit pour partenaires.</div>
+        <a href="#" onclick="openModal('q42025')" class="text-white font-semibold">En savoir plus →</a>
+      </div>
+
+      <div class="item stagger-item" data-delay="0.2">
+        <div class="flex items-center gap-3 mb-3"><div class="road-dot"></div><strong>Q2 2026</strong></div>
+        <div class="text-subtle mb-3">Beta Orphée — Génération multi-modal (texte, 3D).</div>
+        <a href="#" onclick="openModal('q22026')" class="text-white font-semibold">En savoir plus →</a>
+      </div>
+
+      <div class="item stagger-item" data-delay="0.3">
+        <div class="flex items-center gap-3 mb-3"><div class="road-dot"></div><strong>Q4 2026</strong></div>
+        <div class="text-subtle mb-3">Autonomie V1.0 — boucle fermée, montée à l'échelle.</div>
+        <a href="#" onclick="openModal('q42026')" class="text-white font-semibold">En savoir plus →</a>
+      </div>
+
+      <div class="item stagger-item" data-delay="0.4">
+        <div class="flex items-center gap-3 mb-3"><div class="road-dot"></div><strong>2027+</strong></div>
+        <div class="text-subtle mb-3">Expansion vidéo/audio haute-fidélité & partenariats industriels.</div>
+        <a href="#" onclick="openModal('q2027')" class="text-white font-semibold">En savoir plus →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVESTORS & DOWNLOAD -->
+  <section id="investors" class="max-w-7xl mx-auto px-4 py-10">
+    <div class="card p-6 reveal">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h3 class="text-xl font-extrabold">Investisseurs & Partenaires</h3>
+          <p class="text-subtle mt-2">Pour recevoir le deck (PDF) et organiser une démo, téléchargez le pitch ou contactez-nous directement.</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Download button expects file at /assets/SynaptiGenix_Deck.pdf -->
+          <a id="downloadDeck" href="/assets/SynaptiGenix_Deck.pdf" class="btn-white" download><i class="fas fa-file-pdf"></i> Télécharger le deck</a>
+
+          <!-- Quick contact -->
+          <a href="mailto:hello@synaptigenix.io" class="btn-ghost">hello@synaptigenix.io</a>
+        </div>
+      </div>
+      <p id="downloadNote" class="text-subtle mt-3 text-sm">Astuce : pour activer le téléchargement, placez votre PDF à <code>/assets/SynaptiGenix_Deck.pdf</code> sur ton hébergement (même chemin). Si le fichier manque, un message s'affichera.</p>
+    </div>
+  </section>
+
+  <!-- NOUVELLE SECTION ÉQUIPE DÉTAILLÉE -->
+  <section id="team" class="max-w-7xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-extrabold reveal">L'équipe Fondatrice</h2>
+    <p class="text-subtle mt-2 reveal">Nos leaders derrière la vision et l'exécution.</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      <!-- Membre 1: CEO -->
+      <div class="team-member stagger-item" data-delay="0.1">
+        <img src="https://placehold.co/120x120/1A1A1A/FFFFFF?text=CEO" alt="Olympe Ambellit" loading="lazy">
+        <h3 class="font-bold text-xl">Olympe Ambellit</h3>
+        <p class="text-subtle mb-3">CEO & Stratégie Produit</p>
+        <a href="https://linkedin.com/in/olympeambellit" target="_blank" rel="noopener" class="btn-portfolio">
+          <i class="fab fa-linkedin"></i> Voir Portfolio
+        </a>
+      </div>
+
+      <!-- Membre 2: CTO -->
+      <div class="team-member stagger-item" data-delay="0.2">
+        <img src="https://placehold.co/120x120/1A1A1A/FFFFFF?text=CTO" alt="Dr. Zayd Kassar" loading="lazy">
+        <h3 class="font-bold text-xl">Toto Brunele</h3>
+        <p class="text-subtle mb-3">CTO & Architecte Jarris/Orphée</p>
+        <a href="https://github.com/zaydkassar" target="_blank" rel="noopener" class="btn-portfolio">
+          <i class="fab fa-github"></i> Voir Portfolio
+        </a>
+      </div>
+
+      <!-- Membre 3: CPO -->
+      <div class="team-member stagger-item" data-delay="0.3">
+        <img src="https://placehold.co/120x120/1A1A1A/FFFFFF?text=CPO" alt="Leïla Daoudi" loading="lazy">
+        <h3 class="font-bold text-xl">Madeleine</h3>
+        <p class="text-subtle mb-3">CPO & Expérience Utilisateur</p>
+        <a href="https://behance.net/leiladaoudi" target="_blank" rel="noopener" class="btn-portfolio">
+          <i class="fas fa-desktop"></i> Voir Portfolio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" class="max-w-7xl mx-auto px-4 py-10">
+    <div class="flex justify-between items-center reveal">
+      <div>
+        <h2 class="text-2xl font-extrabold">Synapti-Blog</h2>
+        <p class="text-subtle">Articles techniques & études pour démontrer notre crédibilité.</p>
+      </div>
+      <a href="Synapti-Blog.html" class="text-subtle">Voir tout →</a>
+    </div>
+
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <article class="card p-4 hover-lift stagger-item" data-delay="0.1">
+        <img class="w-full h-40 object-cover rounded-md mb-3 mono-img" src="https://images.unsplash.com/photo-1555949963-aa79dcee981d?auto=format&fit=crop&w=1200&q=60" alt="Article" loading="lazy">
+        <p class="text-subtle text-xs">25 JUN 2025 • TECH</p>
+        <h3 class="font-bold mt-1">L'Auto-Correction Sémantique : Rôle de Jarris</h3>
+        <p class="text-subtle mt-2 text-sm">Comment la boucle réduit la nécessité d'étiquetage humain pour certains jeux de données.</p>
+        <div class="mt-3"><a href="#" class="text-white font-semibold">Lire →</a></div>
+      </article>
+
+      <article class="card p-4 hover-lift stagger-item" data-delay="0.2">
+        <img class="w-full h-40 object-cover rounded-md mb-3 mono-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=60" alt="Article" loading="lazy">
+        <p class="text-subtle text-xs">10 JUN 2025 • ANALYSE</p>
+        <h3 class="font-bold mt-1">Mesurer la fiabilité</h3>
+        <p class="text-subtle mt-2 text-sm">Comparaison chiffrée entre synthétique et réel.</p>
+        <div class="mt-3"><a href="#" class="text-white font-semibold">Lire →</a></div>
+      </article>
+
+      <article class="card p-4 hover-lift stagger-item" data-delay="0.3">
+        <img class="w-full h-40 object-cover rounded-md mb-3 mono-img" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=60" alt="Article" loading="lazy">
+        <p class="text-subtle text-xs">01 MAY 2025 • INNO</p>
+        <h3 class="font-bold mt-1">Défi multi-modal</h3>
+        <p class="text-subtle mt-2 text-sm">Assurer cohérence entre 3D, audio et vidéo.</p>
+        <div class="mt-3"><a href="#" class="text-white font-semibold">Lire →</a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="max-w-7xl mx-auto px-4 py-10 reveal">
+    <h2 class="text-2xl font-extrabold">Questions fréquentes</h2>
+    <p class="text-subtle mt-2">Réponses claires aux questions que se posent investisseurs et ingénieurs.</p>
+
+    <div class="mt-6 card p-4">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div><strong>Les données synthétiques sont-elles fiables ?</strong></div>
+          <div class="text-subtle"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer" style="padding:0 0;">
+          <p class="text-subtle mt-3">Oui — avec Jarris nous publions métriques d'exactitude, couverture et risques de ré-identification, et rapports d'audit pour chaque dataset. Nous recommandons des validations sectorielles complémentaires selon l'usage.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div><strong>Comment protégez-vous la confidentialité ?</strong></div>
+          <div class="text-subtle"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer" style="padding:0 0;">
+          <p class="text-subtle mt-3">Aucun PII n’est injecté en clair. Les pipelines isolent les modèles et appliquent des contrôles d’accès. Nous proposons des options RGPD/HIPAA pour clients sensibles.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          <div><strong>Peut-on combiner données réelles et synthétiques ?</strong></div>
+          <div class="text-subtle"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <div class="faq-answer" style="padding:0 0;">
+          <p class="text-subtle mt-3">Oui — nous fournissons des outils d’augmentation et d’équilibrage pour mixer datasets réels/synthétiques sans biais excessif.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEV HUB -->
+  <section id="inscription-dev" class="max-w-7xl mx-auto px-4 py-10 reveal">
+    <div class="card p-6">
+      <h3 class="text-xl font-extrabold">Hub Développeur — Demandez un jeton</h3>
+      <p class="text-subtle mt-2">Intégrez Orphée & Jarris — accès API limité pour partenaires et chercheurs.</p>
+
+      <form id="devForm" onsubmit="handleApiRequest(event)" class="mt-4 grid gap-3">
+        <input id="email" type="email" required placeholder="prenom.nom@entreprise.com" class="p-3 rounded-md bg-[#0b0b0b] border border-[#171717] text-white" />
+        <textarea id="project" rows="3" required placeholder="Décrivez votre projet (max 50 mots)" class="p-3 rounded-md bg-[#0b0b0b] border border-[#171717] text-white"></textarea>
+        <div class="flex gap-3">
+          <button class="btn-white flex-1">Demander l'accès</button>
+          <button type="button" onclick="downloadPitch()" class="btn-ghost">Télécharger pitch</button>
+        </div>
+        <div id="apiStatus" class="text-subtle mt-2"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div style="width:10px;height:10px;background:#fff;border-radius:999px;"></div>
+        <div><strong>Synapti<span class="text-subtle">Genix</span></strong><div class="text-subtle text-sm">© 2025 SynaptiGenix</div></div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Social icons (replace links with yours) -->
+        <a href="https://github.com/your-repo" target="_blank" rel="noopener" aria-label="Github" class="text-subtle hover:text-white"><i class="fab fa-github fa-lg"></i></a>
+        <a href="https://x.com/yourprofile" target="_blank" rel="noopener" aria-label="X" class="text-subtle hover:text-white"><i class="fab fa-x fa-lg"></i></a>
+        <a href="https://discord.gg/yourserver" target="_blank" rel="noopener" aria-label="Discord" class="text-subtle hover:text-white"><i class="fab fa-discord fa-lg"></i></a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-subtle hover:text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 mt-4 text-subtle text-sm">
+      <div class="flex flex-col md:flex-row md:justify-between gap-3">
+        <div>Mentions légales • Politique de confidentialité</div>
+        <div>Contact : <a href="mailto:hello@synaptigenix.io" class="text-subtle hover:text-white">hello@synaptigenix.io</a></div>
+      </div>
+    </div>
+  </footer>
+
+<!-- modal root, also used for the custom notification -->
+<div id="modalRoot" style="display:none;"></div>
+
+<script>
+  // Mobile menu
+  function toggleMobile(){
+    const m = document.getElementById('mobile-menu');
+    if(!m) return;
+    m.style.display = (m.style.display === 'none' || m.style.display === '') ? 'block' : 'none';
+  }
+
+  // --- NOUVELLE FONCTION DE NOTIFICATION (Remplace alert()) ---
+  function showNotification(message) {
+    const root = document.getElementById('modalRoot');
+    root.style.display = 'block'; // Assure que le root est visible
+    
+    // Supprime les notifications existantes
+    document.querySelectorAll('#notificationBox').forEach(el => el.remove());
+
+    const notification = document.createElement('div');
+    notification.id = 'notificationBox';
+    // Utilise la classe 'card' pour le style et ajoute la position fixe et l'animation CSS
+    notification.className = 'fixed bottom-4 right-4 z-50 p-4 card max-w-sm shadow-2xl';
+    notification.style.animation = 'slideIn 0.5s cubic-bezier(.2,1,.3,1)';
+    notification.innerHTML = `
+      <p class="font-bold mb-1">Information</p>
+      <p class="text-subtle text-sm">${message}</p>
+      <button onclick="document.getElementById('notificationBox').remove(); if(document.getElementById('modalRoot').childElementCount === 0) document.getElementById('modalRoot').style.display = 'none';" class="absolute top-1 right-2 text-subtle hover:text-white text-xl p-2">&times;</button>
+    `;
+    root.appendChild(notification);
+    
+    setTimeout(() => {
+      if (document.getElementById('notificationBox')) {
+        document.getElementById('notificationBox').remove();
+      }
+      if (root.childElementCount === 0) root.style.display = 'none';
+    }, 5000); // Supprime après 5 secondes
+  }
+
+
+  // --- GESTION DES ANIMATIONS (Reveal & Stagger) ---
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(e => { 
+        if(e.isIntersecting){
+            e.target.classList.add('show');
             
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
+            // Si c'est un item stagger, appliquer le délai
+            if(e.target.classList.contains('stagger-item')){
+                const delay = parseFloat(e.target.getAttribute('data-delay')) || 0;
+                e.target.style.transitionDelay = `${delay}s`;
+            }
+            
+            observer.unobserve(e.target);
+        }
+    });
+  }, {threshold: 0.1}); 
+  
+  document.querySelectorAll('.reveal, .stagger-item').forEach(el => revealObserver.observe(el));
+  
+  // Révéler immédiatement le HERO au chargement
+  window.onload = function() {
+    document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('show'));
+    // Les items de la nav sont aussi révélés immédiatement (style="transition-delay: X;")
+  };
 
-            const toggleButtons = document.querySelectorAll('[data-toggle]');
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetId = button.getAttribute('data-toggle');
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        targetElement.classList.toggle('section-hidden');
-                    }
-                });
-            });
 
-            const navLinks = document.querySelectorAll('nav a');
-            const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
-            const allLinks = [...navLinks, ...mobileNavLinks];
+  // Modal content map
+  const modalData = {
+    jarris: `<h3 style="margin-top:0">Jarris — Validation automatisée</h3><p style="color:#bdbdbd">Jarris calcule métriques d'exactitude, couverture et risques de ré-identification. Rapports exportables et traçabilité complète.</p>`,
+    orphee: `<h3 style="margin-top:0">Orphée — Génération multi-modal</h3><p style="color:#bdbdbd">Orphée produit actifs cohérents entre vidéo, 3D, audio et texte via pipelines d'alignement sémantique.</p>`,
+    metrics: `<h3 style="margin-top:0">Métriques & Audit</h3><p style="color:#bdbdbd">Dashboards, comparaisons statistiques et tests adversariaux pour prouver la fiabilité.</p>`,
+    privacy: `<h3 style="margin-top:0">Confidentialité</h3><p style="color:#bdbdbd">Aucun PII injecté; isolation de dataset; options RGPD/HIPAA selon secteur.</p>`,
+    scale: `<h3 style="margin-top:0">Scalabilité</h3><p style="color:#bdbdbd">Architecture distribuée, orchestration et pipelines reproductibles pour PB-scale.</p>`,
+    med: `<h3 style="margin-top:0">Médecine</h3><p style="color:#bdbdbd">Scans synthétiques pour pathologies rares, datasets pour diagnostic assisté.</p>`,
+    auton: `<h3 style="margin-top:0">Véhicules autonomes</h3><p style="color:#bdbdbd">Simulations LiDAR/vidéo pour edge-cases et validation sûre.</p>`,
+    games: `<h3 style="margin-top:0">Jeux & Média</h3><p style="color:#bdbdbd">Assets 3D et audio validés sémantiquement pour accélérer la production créative.</p>`,
+    q42025: `<h3 style="margin-top:0">Q4 2025 — Alpha Jarris</h3><p style="color:#bdbdbd">API d'audit et premiers partenaires intégrés.</p>`,
+    q22026: `<h3 style="margin-top:0">Q2 2026 — Beta Orphée</h3><p style="color:#bdbdbd">Générateur multi-modal (texte, 3D) en beta privée.</p>`,
+    q42026: `<h3 style="margin-top:0">Q4 2026 — Autonomie V1.0</h3><p style="color:#bdbdbd">Boucle fermée et montée à l'échelle.</p>`,
+    q2027: `<h3 style="margin-top:0">2027+</h3><p style="color:#bdbdbd">Expansion vidéo/audio haute-fidélité et partenariats industriels.</p>`
+  };
 
-            allLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    if (mobileMenu.classList.contains('hidden') === false) {
-                       mobileMenu.classList.add('hidden');
-                    }
-                });
-            });
-        });
-    </script>
+  function openModal(key){
+    const root = document.getElementById('modalRoot');
+    const content = modalData[key] || '<h3>Info</h3><p style="color:#bdbdbd">Détails à venir.</p>';
+    
+    // Ferme le modal existant si on en ouvre un nouveau
+    closeModal(); 
+    
+    // Utiliser un DOM simple pour le modal
+    root.innerHTML += `<div id="main-modal" class="modal-backdrop" onclick="closeModal()"><div class="modal" onclick="event.stopPropagation()">${content}<div style="text-align:right;margin-top:12px"><button style="padding:.5rem .8rem;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:#bdbdbd;" onclick="closeModal()">Fermer</button></div></div></div>`;
+    root.style.display = 'flex'; // Utiliser 'flex' pour centrer
+    document.body.style.overflow = 'hidden'; // Bloquer le défilement du corps
+  }
+  function closeModal(){ 
+    const root=document.getElementById('modalRoot'); 
+    const mainModal = document.getElementById('main-modal');
+    if(mainModal) mainModal.remove();
+
+    // Rétablir le défilement seulement si aucun autre enfant (comme les notifications) n'est présent
+    if (root.childElementCount === 0) {
+        root.style.display = 'none'; 
+        document.body.style.overflow = ''; 
+    }
+  }
+
+  // FAQ accordion
+  function toggleFAQ(el){
+    const answer = el.nextElementSibling;
+    const arrow = el.querySelector('.fa-chevron-down');
+    const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+    // Fermer si ouvert
+    if(isOpen){
+      answer.style.maxHeight = null;
+      answer.style.paddingTop = '0';
+      answer.style.paddingBottom = '0';
+      arrow.style.transform = 'rotate(0deg)';
+    } else {
+      // Ouvrir
+      // D'abord, fermer tous les autres pour un effet "accordéon" propre
+      el.parentElement.parentElement.querySelectorAll('.faq-answer').forEach(a => { 
+        a.style.maxHeight = null; 
+        a.style.paddingTop = '0'; 
+        a.style.paddingBottom = '0'; 
+        a.previousElementSibling.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
+      });
+
+      // Ouvrir celui-ci
+      answer.style.paddingTop = '0.75rem';
+      answer.style.paddingBottom = '0.75rem';
+      answer.style.maxHeight = answer.scrollHeight + 15 + 'px'; // +15px pour plus de marge
+      arrow.style.transform = 'rotate(180deg)';
+    }
+    // Ajout d'une transition à l'icône
+    if (arrow) arrow.style.transition = 'transform 0.5s ease';
+  }
+
+  // Dev form (simulated)
+  function handleApiRequest(e){
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const status = document.getElementById('apiStatus');
+    status.textContent = 'Traitement...';
+    setTimeout(()=> {
+      const ok = Math.random() > 0.08;
+      if(ok){ status.textContent = 'Demande acceptée — le jeton sera envoyé à ' + email; document.getElementById('email').value=''; document.getElementById('project').value=''; }
+      else status.textContent = 'Échec de validation — vérifiez vos informations';
+    }, 1000);
+  }
+
+  // Download pitch (client-side fallback)
+  function downloadPitch(){
+    const blob = new Blob([`SynaptiGenix - Pitch (placeholder)\n\nContact: hello@synaptigenix.io\n\nMission: Données synthétiques fiables pour l'IA.`], {type:'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'SynaptiGenix_Pitch.txt'; document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    showNotification('Téléchargement du pitch de substitution initié (.txt).');
+  }
+
+  // Check if deck exists (server-side file) — graceful fallback
+  (function checkDeck(){
+    const link = document.getElementById('downloadDeck');
+    const downloadNote = document.getElementById('downloadNote');
+    // En l'absence de vérification côté serveur ou pour éviter les erreurs 404 dans Canvas:
+    downloadNote.innerText = 'Le fichier PDF n\'est pas accessible. Place SynaptiGenix_Deck.pdf dans /assets/ sur ton hébergement pour activer le téléchargement direct.';
+    link.addEventListener('click', (e)=>{ 
+      e.preventDefault(); 
+      showNotification('Le fichier PDF (SynaptiGenix_Deck.pdf) n\'est pas présent sur /assets/. Ajoutez le fichier pour activer le téléchargement.'); 
+    });
+  })();
+
+  // small accessibility: close modals with escape
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+</script>
+
 </body>
 </html>

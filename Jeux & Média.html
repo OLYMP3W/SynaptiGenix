@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SynaptiGenix | Impact Sectoriel - Jeux & Média</title>
+<meta name="description" content="Assets 3D, audio et dialogues validés sémantiquement. Accélérez la production de jeux, films et contenus immersifs." />
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:," />
+<!-- Tailwind + CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<style>
+  :root{
+    --bg:#000;
+    --card:#0F0F0F;
+    --muted:#BBBBBB;
+    --line:#222222;
+    --white:#FFFFFF;
+    --accent: #FFFFFF;
+  }
+  html,body{height:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:var(--bg);
+    color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+    margin:0;
+  }
+  a { color:inherit; }
+  .text-subtle{ color:var(--muted); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; }
+  
+  /* Layout */
+  .hero { padding:3.5rem 1rem; display:flex; flex-wrap:wrap; gap:2rem; align-items:center; max-width:1200px; margin:0 auto; }
+  .hero-left { flex:1 1 420px; min-width:260px; }
+  .hero-right { flex:0 0 560px; min-width:280px; }
+
+  .title { font-weight:900; font-size:clamp(1.8rem,5vw,3.6rem); line-height:1.02; letter-spacing:-0.6px; }
+  .sub { font-size:1.05rem; color:var(--muted); margin-top:.6rem; }
+  
+  /* Images */
+  .mono-img { 
+    filter:grayscale(100%) brightness(1.05); 
+    transition:filter .5s cubic-bezier(.2,.9,.3,1), transform .5s cubic-bezier(.2,.9,.3,1); 
+    border-radius:10px; 
+    will-change: transform, filter;
+  }
+  .mono-img:hover{ 
+    filter:grayscale(0%) brightness(1.1); 
+    transform:translateY(-4px) scale(1.01); 
+  }
+
+  /* Grid */
+  .grid-3 { display:grid; grid-template-columns:1fr; gap:1.5rem; }
+  @media(min-width:640px){ .grid-3{ grid-template-columns:repeat(2,1fr); } }
+  @media(min-width:1024px){ .grid-3{ grid-template-columns:repeat(3,1fr); } }
+
+  /* Animations */
+  .reveal { 
+    opacity:0; 
+    transform:translateY(30px); 
+    transition:opacity .8s cubic-bezier(.2,1,.3,1), transform .8s cubic-bezier(.2,1,.3,1); 
+  }
+  .reveal.show { opacity:1; transform:none; }
+  .stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(.2,1,.3,1), transform 0.6s cubic-bezier(.2,1,.3,1);
+  }
+  .stagger-item.show { opacity: 1; transform: translateY(0); }
+
+  /* Buttons */
+  .btn-white { background:#fff;color:#000;padding:.5rem .9rem;border-radius:999px;font-weight:800;display:inline-flex;align-items:center;gap:.6rem;transition:opacity 0.2s; }
+  .btn-white:hover { opacity:0.9; }
+  .btn-ghost { border:1px solid var(--line); padding:.5rem .8rem;border-radius:999px;color:var(--muted);transition:border-color 0.2s, color 0.2s; }
+  .btn-ghost:hover { border-color:var(--white); color:var(--white); }
+
+  /* Hover lift */
+  .hover-lift { transition:transform .3s cubic-bezier(.2,.9,.3,1); }
+  .hover-lift:hover{ transform:translateY(-6px) scale(1.01); }
+
+  footer { border-top:1px solid var(--line); padding:1.25rem 1rem; }
+
+  @media(max-width:520px){
+    .hero-right { order:-1; }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- NAV -->
+<header class="sticky top-0 z-50" style="backdrop-filter:blur(6px); background:linear-gradient(180deg, rgba(0,0,0,0.88), rgba(0,0,0,0.78));">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div style="width:10px;height:10px;background:#fff;border-radius:999px;"></div>
+      <a href="/" class="font-extrabold text-lg reveal" style="transition-delay: 0.1s;">SYNAPTI<span class="text-subtle">GENIX</span> - Jeux & Média</a>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-6 text-subtle">
+      <a href="/" class="hover:text-white reveal" style="transition-delay: 0.2s;">Accueil</a>
+      <a href="#assets" class="hover:text-white reveal" style="transition-delay: 0.3s;">Assets 3D</a>
+      <a href="#audio" class="hover:text-white reveal" style="transition-delay: 0.4s;">Audio & Voix</a>
+      <a href="#dialogues" class="hover:text-white reveal" style="transition-delay: 0.5s;">Dialogues Sémantiques</a>
+      <a href="#contact" class="btn-white reveal" style="transition-delay: 0.6s;">Contact</a>
+    </nav>
+
+    <div class="md:hidden">
+      <button id="mobile-toggle" aria-label="ouvrir menu" class="text-white text-2xl" onclick="toggleMobile()"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="px-4 pb-3 md:hidden" style="display:none;">
+    <a href="/" class="block py-2 text-white">Accueil</a>
+    <a href="#assets" class="block py-2 text-white">Assets 3D</a>
+    <a href="#audio" class="block py-2 text-white">Audio & Voix</a>
+    <a href="#dialogues" class="block py-2 text-white">Dialogues Sémantiques</a>
+    <a href="#contact" class="block mt-2 py-2 text-center bg-white text-black rounded-full">Contact</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" role="region" aria-label="Hero section">
+    <div class="hero-left reveal">
+      <p class="text-subtle uppercase tracking-widest text-xs mb-3">CRÉATION IMMERSIVE</p>
+      <h1 class="title">Impact Sectoriel : Jeux & Média</h1>
+      <p class="sub">Assets 3D, audio et dialogues validés sémantiquement. Générez des contenus prêts pour la production — modèles, sons, voix et scénarios narratifs — en quelques clics.</p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="#assets" class="btn-white">
+          <i class="fas fa-cube"></i> Assets 3D
+        </a>
+        <a href="#dialogues" class="btn-ghost">En savoir plus</a>
+      </div>
+
+      <!-- Images illustratives -->
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="card p-3 hover-lift stagger-item" data-delay="0.1">
+          <img class="mono-img w-full h-auto mb-3 rounded" src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&w=800&q=80" alt="Asset 3D jeu" loading="lazy">
+          <small class="text-subtle">Modèle 3D synthétique optimisé PBR</small>
+        </div>
+        <div class="card p-3 hover-lift stagger-item" data-delay="0.2">
+          <img class="mono-img w-full h-auto mb-3 rounded" src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=800&q=80" alt="Studio audio IA" loading="lazy">
+          <small class="text-subtle">Voix synthétique avec émotion contrôlée</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right card video-box reveal" style="transition-delay: 0.3s;">
+      <div class="video-wrap">
+        <iframe loading="lazy"
+                src="https://www.youtube.com/embed/ezsxY_HEGyg"
+                title="Synthetic Media for Games"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <p class="text-subtle p-3">Vidéo : Génération automatique d’assets pour jeux vidéo.</p>
+    </div>
+  </section>
+
+  <!-- ASSETS 3D -->
+  <section id="assets" class="max-w-7xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-extrabold reveal">Assets 3D Prêts pour la Production</h2>
+    <p class="text-subtle mt-2 reveal">Générez des modèles 3D texturés, riggés et optimisés pour Unreal, Unity ou Blender — avec LOD automatiques.</p>
+
+    <div class="grid-3 mt-6">
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.1">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&w=800&q=80" alt="Modèle PBR" loading="lazy">
+        <h3 class="font-bold">Matériaux PBR</h3>
+        <p class="text-subtle mt-1">Textures 4K, normal maps, roughness.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.2">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1578662996442-48f60103fc3f?auto=format&fit=crop&w=800&q=80" alt="Rigging auto" loading="lazy">
+        <h3 class="font-bold">Rigging Automatique</h3>
+        <p class="text-subtle mt-1">Squelettes humanoïdes ou mécaniques.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.3">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80" alt="LOD" loading="lazy">
+        <h3 class="font-bold">LOD & Optimisation</h3>
+        <p class="text-subtle mt-1">Versions basse-poly générées en parallèle.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- AUDIO & VOIX -->
+  <section id="audio" class="max-w-7xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-extrabold reveal">Audio & Voix Synthétiques</h2>
+    <p class="text-subtle mt-2 reveal">Voix réalistes multilingues, bruitages procéduraux et musiques adaptatives — synchronisées avec l’action.</p>
+
+    <div class="grid-3 mt-6">
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.1">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=800&q=80" alt="Voix IA" loading="lazy">
+        <h3 class="font-bold">Voix Émotionnelle</h3>
+        <p class="text-subtle mt-1">Prosodie, accent, émotion contrôlée.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.2">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&w=800&q=80" alt="Bruitages" loading="lazy">
+        <h3 class="font-bold">Bruitages Procéduraux</h3>
+        <p class="text-subtle mt-1">Pas, impacts, vent, feu — en temps réel.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.3">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1614149162883-504ce4d13909?auto=format&fit=crop&w=800&q=80" alt="Musique adaptative" loading="lazy">
+        <h3 class="font-bold">Musique Adaptative</h3>
+        <p class="text-subtle mt-1">Bandes-son qui évoluent avec le gameplay.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- DIALOGUES SÉMANTIQUES -->
+  <section id="dialogues" class="max-w-7xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-extrabold reveal">Dialogues Validés Sémantiquement</h2>
+    <p class="text-subtle mt-2 reveal">Scénarios narratifs cohérents, avec branching logique et validation contextuelle — prêts pour le doublage.</p>
+
+    <div class="grid-3 mt-6">
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.1">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1516321310764-9f8d6423dea6?auto=format&fit=crop&w=800&q=80" alt="Arbre narratif" loading="lazy">
+        <h3 class="font-bold">Arbres Narratifs</h3>
+        <p class="text-subtle mt-1">Branching infini, coh, cohérence garantie.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.2">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1581092580490-3d44f07e0e74?auto=format&fit=crop&w=800&q=80" alt="Validation sémantique" loading="lazy">
+        <h3 class="font-bold">Validation Sémantique</h3>
+        <p class="text-subtle mt-1">Détection d’incohérences, ton, culture.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.3">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1519389950471-67af5e7d36b8?auto=format&fit=crop&w=800&q=80" alt="Doublage auto" loading="lazy">
+        <h3 class="font-bold">Doublage Automatique</h3>
+        <p class="text-subtle mt-1">Lip-sync parfait, 50+ langues.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="max-w-7xl mx-auto px-4 py-10">
+    <div class="card p-6 text-center reveal">
+      <h3 class="text-xl font-extrabold">Prêt à Créer le Prochain Hit ?</h3>
+      <p class="text-subtle mt-2">Générez un prototype complet en 48h.</p>
+      <a href="mailto:media@synaptigenix.ai" class="btn-white mt-4 inline-flex items-center gap-2">
+        <i class="fas fa-gamepad"></i> Demander un POC
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER (identique) -->
+<footer>
+  <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div style="width:10px;height:10px;background:#fff;border-radius:999px;"></div>
+      <div><strong>SYNAPTI<span class="text-subtle">GENIX</span></strong><div class="text-subtle text-sm">© 2025 SynaptiGenix</div></div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="https://github.com/your-repo" target="_blank" rel="noopener" aria-label="Github" class="text-subtle hover:text-white"><i class="fab fa-github fa-lg"></i></a>
+      <a href="https://x.com/yourprofile" target="_blank" rel="noopener" aria-label="X" class="text-subtle hover:text-white"><i class="fab fa-x fa-lg"></i></a>
+      <a href="https://discord.gg/yourserver" target="_blank" rel="noopener" aria-label="Discord" class="text-subtle hover:text-white"><i class="fab fa-discord fa-lg"></i></a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-subtle hover:text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 mt-4 text-subtle text-sm">
+    <div class="flex flex-col md:flex-row md:justify-between gap-3">
+      <div>Mentions légales • Politique de confidentialité</div>
+      <div>Contact : <a href="mailto:hello@synaptigenix.io" class="text-subtle hover:text-white">hello@synaptigenix.io</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal root -->
+<div id="modalRoot" style="display:none;"></div>
+
+<script>
+  function toggleMobile(){
+    const m = document.getElementById('mobile-menu');
+    if(!m) return;
+    m.style.display = (m.style.display === 'none' || m.style.display === '') ? 'block' : 'none';
+  }
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { 
+        if(e.isIntersecting){
+            e.target.classList.add('show');
+            if(e.target.classList.contains('stagger-item')){
+                const delay = parseFloat(e.target.getAttribute('data-delay')) || 0;
+                e.target.style.transitionDelay = `${delay}s`;
+            }
+            revealObserver.unobserve(e.target);
+        }
+    });
+  }, {threshold: 0.1}); 
+  
+  document.querySelectorAll('.reveal, .stagger-item').forEach(el => revealObserver.observe(el));
+  
+  window.onload = () => {
+    document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('show'));
+  };
+
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+
+  function closeModal(){
+    const root = document.getElementById('modalRoot');
+    const modal = document.getElementById('main-modal');
+    if(modal) modal.remove();
+    if(root.childElementCount === 0) root.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+</script>
+
+</1>
