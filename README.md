@@ -1,72 +1,67 @@
+# SynaptiGenix
 
-SynaptiGenix
+🚀 **Données Synthétiques Autonomes et Évolutives pour l’IA**
 
-Le futur de l'auto-amélioration systémique
-
-SynaptiGenix est une plateforme de génération de données synthétiques multi-modale (vidéo, 3D, texte, audio), couplée à Jarris, notre couche propriétaire d’auto-validation.  
-Elle vise à fournir des datasets fiables, auditables, reproductibles et conformes, pour entraîner les intelligences artificielles les plus exigeantes.
-
----
-
-🔍 Pourquoi SynaptiGenix ?
-
-- L'IA de demain nécessite des données propres, éthiques et traçables.
-- Les datasets actuels sont souvent opaques, biaisés ou incomplets.
-- Nous offrons une solution claire, traçable et vérifiable pour bâtir des modèles robustes.
+SynaptiGenix est une plateforme open-source dédiée à la génération de **données synthétiques multimodales** (texte, 3D, audio, vidéo) afin de fournir un carburant fiable et scalable aux modèles d’intelligence artificielle.  
+Notre objectif : dépasser les limites des datasets réels (biais, rareté, contraintes légales) et offrir une alternative auditable, conforme et infiniment extensible.
 
 ---
 
-🧠 Domaines d’application
-
-- Vision par ordinateur
-- Synthèse vocale
-- Agents conversationnels
-- Simulation 3D
-- Data augmentation avancée
-
----
-
-🛠 Fonctionnalités clés
-
-- Génération multi-modale : Vidéo, 3D, Texte, Audio
-- Jarris : système d’auto-validation avec métriques auditables
-- Datasets reproductibles & conformes aux standards
-- Accès développeur & API à venir
+## ✨ Fonctionnalités principales
+- **Multi-modalité** : Génération de données en texte, 3D, audio et vidéo.
+- **Fiabilité** : Audit automatique via la couche *Jarris* (rapports, métriques, tests).
+- **Confidentialité** : Aucun PII injecté, conformité RGPD/HIPAA.
+- **Scalabilité** : Pipelines conçus pour atteindre le **petabyte-scale**.
+- **Applications critiques** :
+  - Santé : scans synthétiques pour pathologies rares.
+  - Véhicules autonomes : scénarios extrêmes, LiDAR synthétique.
+  - Jeux & médias : assets 3D/audio validés.
 
 ---
 
-👥 Équipe
-
-Un collectif interdisciplinaire de développeurs, designers, data scientists et chercheurs, unis par une mission :  
-Rendre l’IA plus éthique, robuste et ouverte.
-
----
-
-🗺 Roadmap (2025)
-
-- Q1 → Lancement de la démo publique  
-- Q2 → Accès développeur & API  
-- Q3 → Marketplace de datasets synthétiques  
-- Q4 → Version entreprise & outils d’intégration ML
+## 📊 Roadmap
+- **Q2 2026** → Beta *Orphée* (génération multimodale texte/3D).  
+- **Q4 2026** → Alpha *Jarris* (API d’audit pour partenaires).  
+- **Q4 2026** → Autonomie V1.0 (boucle fermée, montée à l’échelle).  
+- **2027+** → Expansion vidéo/audio haute-fidélité et partenariats industriels.  
 
 ---
 
-📬 Blog
-
-À venir — articles, updates, avancées techniques, coulisses du projet.
-
----
-
-🚀 Démo & Accès
-
-👉 Voir la démo  
-👉 Demander un accès early  
-👉 Rejoindre la communauté Discord
+## 👥 Équipe
+- **Olympe Ambellit** – Fondateur & CEO  
+- **Toto Brunele** – CTO, architecte Jarris/Orphée  
+- **Madeleine (Leïla Daoudi)** – CPO, expérience utilisateur  
 
 ---
 
-> Créé avec passion par la LYX Developer Community
+## 🛠️ Installation
+```bash
+# Cloner le repo
+git clone https://github.com/OLYMP3W/synapti-genix.git
 
-```
+# Aller dans le dossier
+cd synapti-genix
 
-Tu veux aussi que je génère une version HTML pour une landing page, ou une version anglaise ?
+# Installer les dépendances
+npm install
+
+# Lancer en local
+npm run dev
+🤝 Contribution
+Les contributions sont les bienvenues !
+
+Forkez le projet
+
+Créez une branche (feature/ma-fonctionnalite)
+
+Faites un commit
+
+Ouvrez une Pull Request
+📜 Licence
+Ce projet est sous licence MIT – libre d’utilisation et de modification.
+🌐 Liens utiles
+Site officiel
+
+Documentation (à compléter)
+
+Issues GitHub
