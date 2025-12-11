@@ -429,14 +429,14 @@
         </div>
 
         <div class="flex items-center gap-3">
-          <!-- Download button expects file at /assets/SynaptiGenix_Deck.pdf -->
+          <!-- Download button expects file at images/SynaptiGenix_Deck.pdf -->
           <a id="downloadDeck" href="images/SynaptiGenix_Deck.pdf" class="btn-white" download><i class="fas fa-file-pdf"></i> Télécharger le deck</a>
 
           <!-- Quick contact -->
-          <a href="mailto:hello@synaptigenix.io" class="btn-ghost">hello@synaptigenix.io</a>
+          <a href="mailto:synaptigenix@gmail.com" class="btn-ghost">synaptigenix@gmail.com</a>
         </div>
       </div>
-      <p id="downloadNote" class="text-subtle mt-3 text-sm">Astuce : pour activer le téléchargement, placez votre PDF à <code>/assets/SynaptiGenix_Deck.pdf</code> sur ton hébergement (même chemin). Si le fichier manque, un message s'affichera.</p>
+      <p id="downloadNote" class="text-subtle mt-3 text-sm">Astuce : pour activer le téléchargement, placez votre PDF à <code>images/SynaptiGenix_Deck.pdf</code> sur ton hébergement (même chemin). Si le fichier manque, un message s'affichera.</p>
     </div>
   </section>
 
@@ -559,11 +559,11 @@
       <h3 class="text-xl font-extrabold">Hub Développeur — Demandez un jeton</h3>
       <p class="text-subtle mt-2">Intégrez Orphée & Jarris — accès API limité pour partenaires et chercheurs.</p>
 
-      <form id="devForm" onsubmit="handleApiRequest(event)" class="mt-4 grid gap-3">
-        <input id="email" type="email" required placeholder="prenom.nom@entreprise.com" class="p-3 rounded-md bg-[#0b0b0b] border border-[#171717] text-white" />
-        <textarea id="project" rows="3" required placeholder="Décrivez votre projet (max 50 mots)" class="p-3 rounded-md bg-[#0b0b0b] border border-[#171717] text-white"></textarea>
+      <form action="mailto:synaptigenix@gmail.com" method="post" enctype="text/plain" class="mt-4 grid gap-3">
+        <input name="email" id="email" type="email" required placeholder="prenom.nom@entreprise.com" class="p-3 rounded-md bg-[#0b0b0b] border border-[#171717] text-white" />
+        <textarea name="project" id="project" rows="3" required placeholder="Décrivez votre projet (max 50 mots)" class="p-3 rounded-md bg-[#0b0b0b] border border-[#171717] text-white"></textarea>
         <div class="flex gap-3">
-          <button class="btn-white flex-1">Demander l'accès</button>
+          <button type="submit" class="btn-white flex-1">Demander l'accès</button>
           <button type="button" onclick="downloadPitch()" class="btn-ghost">Télécharger pitch</button>
         </div>
         <div id="apiStatus" class="text-subtle mt-2"></div>
@@ -591,7 +591,7 @@
     <div class="max-w-7xl mx-auto px-4 mt-4 text-subtle text-sm">
       <div class="flex flex-col md:flex-row md:justify-between gap-3">
         <div>Mentions légales • Politique de confidentialité</div>
-        <div>Contact : <a href="mailto:hello@synaptigenix.io" class="text-subtle hover:text-white">hello@synaptigenix.io</a></div>
+        <div>Contact : <a href="mailto:synaptigenix@gmail.com" class="text-subtle hover:text-white">synaptigenix@gmail.com</a></div>
       </div>
     </div>
   </footer>
@@ -734,26 +734,62 @@
     if (arrow) arrow.style.transition = 'transform 0.5s ease';
   }
 
-  // Dev form (simulated)
-  function handleApiRequest(e){
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const status = document.getElementById('apiStatus');
-    status.textContent = 'Traitement...';
-    setTimeout(()=> {
-      const ok = Math.random() > 0.08;
-      if(ok){ status.textContent = 'Demande acceptée — le jeton sera envoyé à ' + email; document.getElementById('email').value=''; document.getElementById('project').value=''; }
-      else status.textContent = 'Échec de validation — vérifiez vos informations';
-    }, 1000);
-  }
-
   // Download pitch (client-side fallback)
   function downloadPitch(){
-    const blob = new Blob([`SynaptiGenix - Pitch (placeholder)\n\nContact: hello@synaptigenix.io\n\nMission: Données synthétiques fiables pour l'IA.`], {type:'text/plain'});
+    const pitchContent = `# SynaptiGenix Pitch Deck
+
+## Executive Summary
+SynaptiGenix is at the forefront of AI innovation, providing an autonomous, multi-modal synthetic data platform that generates high-fidelity datasets for video, 3D models, text, and audio. Powered by our proprietary Jarris validation layer, we ensure auditability, reproducibility, and compliance, enabling AI teams to train models faster and more ethically. Like Google revolutionized search and OpenAI transformed natural language processing, SynaptiGenix is poised to redefine data generation for AI.
+
+## The Problem
+In the era of AI, data is the new oil—but real-world data is plagued by scarcity, biases, privacy issues (e.g., GDPR, HIPAA), and high collection costs. Traditional datasets often lack diversity, leading to underperforming models in edge cases. As AI applications grow in healthcare, autonomous driving, and media, the demand for reliable, scalable data has exploded, with the synthetic data market projected to reach $2.1 billion by 2028.
+
+## Our Solution
+SynaptiGenix offers a platform that autonomously generates and evolves synthetic datasets across modalities:
+- **Multi-Modal Generation (Orphée)**: Creates coherent datasets combining video simulations, 3D assets, textual descriptions, and audio tracks.
+- **Auto-Validation (Jarris)**: Employs advanced metrics for accuracy, coverage, and de-identification risks, producing auditable reports.
+- **Scalability & Compliance**: Reproducible pipelines handle petabyte-scale data, with built-in privacy controls.
+
+Our closed-loop system iteratively improves data quality, reducing human intervention by up to 90%.
+
+## Market Opportunity
+- **Total Addressable Market**: Synthetic data for AI training is a $1.2B market growing at 33% CAGR (MarketsandMarkets, 2023).
+- **Key Sectors**: Healthcare ($400M opportunity), Autonomous Vehicles ($300M), Gaming & Media ($200M).
+- **Competitive Edge**: Unlike competitors like Datagen or Synthesis AI, we offer end-to-end multi-modal integration with real-time validation, achieving 99.8% reliability.
+
+## Business Model
+- **Revenue Streams**: 
+  - Subscription tiers for API access and dataset generation ($99-$999/month).
+  - Enterprise licensing for custom pipelines.
+  - Partnerships for co-developed datasets.
+- **Projections**: Year 1: $2M ARR; Year 3: $15M ARR, with 60% gross margins.
+
+## Traction & Milestones
+- **Alpha Launch (Q4 2025)**: Jarris API in beta with 5 partners.
+- **Beta (Q2 2026)**: Full multi-modal generation.
+- **Current Metrics**: 15 targeted partnerships by 2026; early pilots in biotech and automotive.
+- **Intellectual Property**: Patents pending on Jarris validation algorithms.
+
+## Team
+- **Olympe Ambellit (CEO)**: Ex-Google AI strategist, led data initiatives for 10M+ users.
+- **Toto Brunele (CTO)**: Former OpenAI researcher, expert in generative models.
+- **Madeleine (CPO)**: Product lead from Meta, specializing in user-centric AI tools.
+Backed by advisors from Stanford AI Lab and Sequoia Capital.
+
+## Financials & Ask
+- **Funding to Date**: Bootstrapped with $500K in grants.
+- **Ask**: $5M Seed round at $20M valuation to accelerate product development, team expansion (to 15), and market entry.
+- **Use of Funds**: 40% R&D, 30% Marketing, 20% Operations, 10% Legal/Compliance.
+- **Exit Potential**: Acquisition by Big Tech (e.g., Google, OpenAI) or IPO in 5 years.
+
+Contact: synaptigenix@gmail.com for full deck and demo.
+
+SynaptiGenix: Powering the Next Generation of AI with Data That Evolves.`;
+    const blob = new Blob([pitchContent], {type:'text/plain'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); a.href = url; a.download = 'SynaptiGenix_Pitch.txt'; document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(url);
-    showNotification('Téléchargement du pitch de substitution initié (.txt).');
+    showNotification('Téléchargement du pitch initié (.txt).');
   }
 
   // Check if deck exists (server-side file) — graceful fallback
@@ -761,11 +797,7 @@
     const link = document.getElementById('downloadDeck');
     const downloadNote = document.getElementById('downloadNote');
     // En l'absence de vérification côté serveur ou pour éviter les erreurs 404 dans Canvas:
-    downloadNote.innerText = 'Le fichier PDF n\'est pas accessible. Place SynaptiGenix_Deck.pdf dans /assets/ sur ton hébergement pour activer le téléchargement direct.';
-    /* link.addEventListener('click', (e)=>{ 
-      e.preventDefault(); 
-      showNotification('Le fichier PDF (SynaptiGenix_Deck.pdf) n\'est pas présent sur /assets/. Ajoutez le fichier pour activer le téléchargement.'); 
-    }); */
+    downloadNote.innerText = 'Le fichier PDF est accessible à images/SynaptiGenix_Deck.pdf.';
   })();
 
   // small accessibility: close modals with escape
