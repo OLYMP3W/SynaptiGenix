@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SynaptiGenix | Confidentialité & Conformité</title>
+<meta name="description" content="Aucun PII injecté, traçabilité complète et conformité RGPD/HIPAA. Vos données synthétiques sont sécurisées par conception." />
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:," />
+<!-- Tailwind + CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<style>
+  :root{
+    --bg:#000;
+    --card:#0F0F0F;
+    --muted:#BBBBBB;
+    --line:#222222;
+    --white:#FFFFFF;
+    --accent: #FFFFFF;
+  }
+  html,body{height:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:var(--bg);
+    color:var(--white);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+    margin:0;
+  }
+  a { color:inherit; }
+  .text-subtle{ color:var(--muted); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; }
+  
+  /* Layout */
+  .hero { padding:3.5rem 1rem; display:flex; flex-wrap:wrap; gap:2rem; align-items:center; max-width:1200px; margin:0 auto; }
+  .hero-left { flex:1 1 420px; min-width:260px; }
+  .hero-right { flex:0 0 560px; min-width:280px; }
+
+  .title { font-weight:900; font-size:clamp(1.8rem,5vw,3.6rem); line-height:1.02; letter-spacing:-0.6px; }
+  .sub { font-size:1.05rem; color:var(--muted); margin-top:.6rem; }
+  
+  /* Images */
+  .mono-img { 
+    filter:grayscale(100%) brightness(1.05); 
+    transition:filter .5s cubic-bezier(.2,.9,.3,1), transform .5s cubic-bezier(.2,.9,.3,1); 
+    border-radius:10px; 
+    will-change: transform, filter;
+  }
+  .mono-img:hover{ 
+    filter:grayscale(0%) brightness(1.1); 
+    transform:translateY(-4px) scale(1.01); 
+  }
+
+  /* Grid */
+  .grid-3 { display:grid; grid-template-columns:1fr; gap:1.5rem; }
+  @media(min-width:640px){ .grid-3{ grid-template-columns:repeat(2,1fr); } }
+  @media(min-width:1024px){ .grid-3{ grid-template-columns:repeat(3,1fr); } }
+
+  /* Animations */
+  .reveal { 
+    opacity:0; 
+    transform:translateY(30px); 
+    transition:opacity .8s cubic-bezier(.2,1,.3,1), transform .8s cubic-bezier(.2,1,.3,1); 
+  }
+  .reveal.show { opacity:1; transform:none; }
+  .stagger-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(.2,1,.3,1), transform 0.6s cubic-bezier(.2,1,.3,1);
+  }
+  .stagger-item.show { opacity: 1; transform: translateY(0); }
+
+  /* Buttons */
+  .btn-white { background:#fff;color:#000;padding:.5rem .9rem;border-radius:999px;font-weight:800;display:inline-flex;align-items:center;gap:.6rem;transition:opacity 0.2s; }
+  .btn-white:hover { opacity:0.9; }
+  .btn-ghost { border:1px solid var(--line); padding:.5rem .8rem;border-radius:999px;color:var(--muted);transition:border-color 0.2s, color 0.2s; }
+  .btn-ghost:hover { border-color:var(--white); color:var(--white); }
+
+  /* Hover lift */
+  .hover-lift { transition:transform .3s cubic-bezier(.2,.9,.3,1); }
+  .hover-lift:hover{ transform:translateY(-6px) scale(1.01); }
+
+  footer { border-top:1px solid var(--line); padding:1.25rem 1rem; }
+
+  @media(max-width:520px){
+    .hero-right { order:-1; }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- NAV -->
+<header class="sticky top-0 z-50" style="backdrop-filter:blur(6px); background:linear-gradient(180deg, rgba(0,0,0,0.88), rgba(0,0,0,0.78));">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div style="width:10px;height:10px;background:#fff;border-radius:999px;"></div>
+      <a href="/" class="font-extrabold text-lg reveal" style="transition-delay: 0.1s;">SYNAPTI<span class="text-subtle">GENIX</span> - Confidentialité</a>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-6 text-subtle">
+      <a href="/" class="hover:text-white reveal" style="transition-delay: 0.2s;">Accueil</a>
+      <a href="#zero-pii" class="hover:text-white reveal" style="transition-delay: 0.3s;">Zéro PII</a>
+      <a href="#tracabilite" class="hover:text-white reveal" style="transition-delay: 0.4s;">Traçabilité</a>
+      <a href="#compliance" class="hover:text-white reveal" style="transition-delay: 0.5s;">RGPD/HIPAA</a>
+      <a href="#contact" class="btn-white reveal" style="transition-delay: 0.6s;">Contact</a>
+    </nav>
+
+    <div class="md:hidden">
+      <button id="mobile-toggle" aria-label="ouvrir menu" class="text-white text-2xl" onclick="toggleMobile()"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="px-4 pb-3 md:hidden" style="display:none;">
+    <a href="/" class="block py-2 text-white">Accueil</a>
+    <a href="#zero-pii" class="block py-2 text-white">Zéro PII</a>
+    <a href="#tracabilite" class="block py-2 text-white">Traçabilité</a>
+    <a href="#compliance" class="block py-2 text-white">RGPD/HIPAA</a>
+    <a href="#contact" class="block mt-2 py-2 text-center bg-white text-black rounded-full">Contact</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" role="region" aria-label="Hero section">
+    <div class="hero-left reveal">
+      <p class="text-subtle uppercase tracking-widest text-xs mb-3">SÉCURITÉ PAR CONCEPTION</p>
+      <h1 class="title">Confidentialité & Conformité Absolue</h1>
+      <p class="sub">Aucun PII injecté. Traçabilité complète. Contrôles d'accès sectoriels. Nos données synthétiques respectent RGPD, HIPAA et les normes les plus strictes — dès la génération.</p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="#zero-pii" class="btn-white">
+          <i class="fas fa-shield-alt"></i> Zéro PII
+        </a>
+        <a href="#compliance" class="btn-ghost">En savoir plus</a>
+      </div>
+
+      <!-- Images illustratives -->
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="card p-3 hover-lift stagger-item" data-delay="0.1">
+          <img class="mono-img w-full h-auto mb-3 rounded" src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=800&q=80" alt="Verrou de sécurité numérique" loading="lazy">
+          <small class="text-subtle">Pipeline isolé — aucune donnée personnelle</small>
+        </div>
+        <div class="card p-3 hover-lift stagger-item" data-delay="0.2">
+          <img class="mono-img w-full h-auto mb-3 rounded" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" alt="Certificat de conformité" loading="lazy">
+          <small class="text-subtle">Certifié RGPD & HIPAA-ready</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right card video-box reveal" style="transition-delay: 0.3s;">
+      <div class="video-wrap">
+        <iframe loading="lazy"
+                src="https://www.youtube.com/embed/5L8i5s8tJ0I"
+                title="Privacy by Design in Synthetic Data"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <p class="text-subtle p-3">Vidéo : Comment les données synthétiques éliminent les risques PII.</p>
+    </div>
+  </section>
+
+  <!-- ZÉRO PII -->
+  <section id="zero-pii" class="max-w-7xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-extrabold reveal">Aucun PII Injecté</h2>
+    <p class="text-subtle mt-2 reveal">Nos modèles génèrent des données 100% synthétiques. Aucune donnée réelle n’est utilisée dans le pipeline. Cela élimine tout risque de fuite de données personnelles.</p>
+
+    <div class="grid-3 mt-6">
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.1">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?auto=format&fit=crop&w=800&q=80" alt="Pipeline isolé" loading="lazy">
+        <h3 class="font-bold">Pipeline Isolé</h3>
+        <p class="text-subtle mt-1">Aucune donnée externe n’entre dans le système de génération.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.2">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1559526324-c1f166daf363?auto=format&fit=crop&w=800&q=80" alt="Anonymisation" loading="lazy">
+        <h3 class="font-bold">Anonymisation Garantie</h3>
+        <p class="text-subtle mt-1">Même les métadonnées sont synthétiques et non traçables.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.3">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80" alt="Audit PII" loading="lazy">
+        <h3 class="font-bold">Audit Automatique</h3>
+        <p class="text-subtle mt-1">Jarris scanne chaque dataset pour détecter tout risque PII.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- TRAÇABILITÉ -->
+  <section id="tracabilite" class="max-w-7xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-extrabold reveal">Traçabilité Complète</h2>
+    <p class="text-subtle mt-2 reveal">Chaque dataset est accompagné d’un journal d’audit immuable : paramètres de génération, seed, modèle utilisé, timestamp.</p>
+
+    <div class="grid-3 mt-6">
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.1">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1558494949-ef646e9a80d2?auto=format&fit=crop&w=800&q=80" alt="Blockchain-like audit" loading="lazy">
+        <h3 class="font-bold">Journal Immuable</h3>
+        <p class="text-subtle mt-1">Preuve cryptographique de l’origine du dataset.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.2">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1639413560955-3ab4d14162bb?auto=format&fit=crop&w=800&q=80" alt="Versioning" loading="lazy">
+        <h3 class="font-bold">Versioning Strict</h3>
+        <p class="text-subtle mt-1">Chaque version est traçable et reproductible.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.3">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1581092580490-3d44f07e0e74?auto=format&fit=crop&w=800&q=80" alt="Accès contrôlé" loading="lazy">
+        <h3 class="font-bold">Accès Sectoriel</h3>
+        <p class="text-subtle mt-1">Contrôles RBAC adaptés à la santé, finance, etc.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CONFORMITÉ RGPD / HIPAA -->
+  <section id="compliance" class="max-w-7xl mx-auto px-4 py-10">
+    <h2 class="text-2xl font-extrabold reveal">Conformité RGPD & HIPAA</h2>
+    <p class="text-subtle mt-2 reveal">Nous offrons des configurations prêtes pour les secteurs réglementés. Certificats disponibles sur demande.</p>
+
+    <div class="grid-3 mt-6">
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.1">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80" alt="RGPD" loading="lazy">
+        <h3 class="font-bold">RGPD-Ready</h3>
+        <p class="text-subtle mt-1">Droit à l’oubli, minimisation, consentement simulé.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.2">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="HIPAA" loading="lazy">
+        <h3 class="font-bold">HIPAA-Compliant</h3>
+        <p class="text-subtle mt-1">Chiffrement, accès limité, audits annuels.</p>
+      </article>
+
+      <article class="card hover-lift p-4 stagger-item" data-delay="0.3">
+        <img class="mono-img w-full h-40 object-cover mb-3 rounded" src="https://images.unsplash.com/photo-1581093588401-fbb62a62f120?auto=format&fit=crop&w=800&q=80" alt="Certifications" loading="lazy">
+        <h3 class="font-bold">Certifications Tierces</h3>
+        <p class="text-subtle mt-1">Audits Deloitte, ISO 27001 en cours.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="max-w-7xl mx-auto px-4 py-10">
+    <div class="card p-6 text-center reveal">
+      <h3 class="text-xl font-extrabold">Besoin d’un Audit de Conformité ?</h3>
+      <p class="text-subtle mt-2">Nous fournissons un rapport complet adapté à votre secteur.</p>
+      <a href="mailto:compliance@synaptigenix.ai" class="btn-white mt-4 inline-flex items-center gap-2">
+        <i class="fas fa-file-shield"></i> Demander un Audit
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER (identique) -->
+<footer>
+  <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div style="width:10px;height:10px;background:#fff;border-radius:999px;"></div>
+      <div><strong>SYNAPTI<span class="text-subtle">GENIX</span></strong><div class="text-subtle text-sm">© 2025 SynaptiGenix</div></div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="https://github.com/your-repo" target="_blank" rel="noopener" aria-label="Github" class="text-subtle hover:text-white"><i class="fab fa-github fa-lg"></i></a>
+      <a href="https://x.com/yourprofile" target="_blank" rel="noopener" aria-label="X" class="text-subtle hover:text-white"><i class="fab fa-x fa-lg"></i></a>
+      <a href="https://discord.gg/yourserver" target="_blank" rel="noopener" aria-label="Discord" class="text-subtle hover:text-white"><i class="fab fa-discord fa-lg"></i></a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" aria-label="LinkedIn" class="text-subtle hover:text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 mt-4 text-subtle text-sm">
+    <div class="flex flex-col md:flex-row md:justify-between gap-3">
+      <div>Mentions légales • Politique de confidentialité</div>
+      <div>Contact : <a href="mailto:hello@synaptigenix.io" class="text-subtle hover:text-white">hello@synaptigenix.io</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal root -->
+<div id="modalRoot" style="display:none;"></div>
+
+<script>
+  function toggleMobile(){
+    const m = document.getElementById('mobile-menu');
+    if(!m) return;
+    m.style.display = (m.style.display === 'none' || m.style.display === '') ? 'block' : 'none';
+  }
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { 
+        if(e.isIntersecting){
+            e.target.classList.add('show');
+            if(e.target.classList.contains('stagger-item')){
+                const delay = parseFloat(e.target.getAttribute('data-delay')) || 0;
+                e.target.style.transitionDelay = `${delay}s`;
+            }
+            revealObserver.unobserve(e.target);
+        }
+    });
+  }, {threshold: 0.1}); 
+  
+  document.querySelectorAll('.reveal, .stagger-item').forEach(el => revealObserver.observe(el));
+  
+  window.onload = () => {
+    document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('show'));
+  };
+
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+
+  function closeModal(){
+    const root = document.getElementById('modalRoot');
+    const modal = document.getElementById('main-modal');
+    if(modal) modal.remove();
+    if(root.childElementCount === 0) root.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+</script>
+
+</body>
+</html>
