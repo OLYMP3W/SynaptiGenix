@@ -430,13 +430,13 @@
 
         <div class="flex items-center gap-3">
           <!-- Download button expects file at images/SynaptiGenix_Deck.pdf -->
-          <a id="downloadDeck" href="images/SynaptiGenix_Deck.pdf" class="btn-white" download><i class="fas fa-file-pdf"></i> Télécharger le deck</a>
+          <a id="downloadDeck" href="Images/SynaptiGenix_Deck.pdf" class="btn-white" download><i class="fas fa-file-pdf"></i> Télécharger le deck</a>
 
           <!-- Quick contact -->
           <a href="mailto:synaptigenix@gmail.com" class="btn-ghost">synaptigenix@gmail.com</a>
         </div>
       </div>
-      <p id="downloadNote" class="text-subtle mt-3 text-sm">Astuce : pour activer le téléchargement, placez votre PDF à <code>images/SynaptiGenix_Deck.pdf</code> sur ton hébergement (même chemin). Si le fichier manque, un message s'affichera.</p>
+      <p id="downloadNote" class="text-subtle mt-3 text-sm">Astuce : pour activer le téléchargement, placez votre PDF à <code>Images/SynaptiGenix_Deck.pdf</code> sur ton hébergement (même chemin). Si le fichier manque, un message s'affichera.</p>
     </div>
   </section>
 
@@ -797,7 +797,7 @@ SynaptiGenix: Powering the Next Generation of AI with Data That Evolves.`;
     const link = document.getElementById('downloadDeck');
     const downloadNote = document.getElementById('downloadNote');
     // En l'absence de vérification côté serveur ou pour éviter les erreurs 404 dans Canvas:
-    downloadNote.innerText = 'Le fichier PDF est accessible à images/SynaptiGenix_Deck.pdf.';
+    downloadNote.innerText = 'Le fichier PDF est accessible à Images/SynaptiGenix_Deck.pdf.';
   })();
 
   // small accessibility: close modals with escape
@@ -806,3 +806,4 @@ SynaptiGenix: Powering the Next Generation of AI with Data That Evolves.`;
 
 </body>
 </html>
+
