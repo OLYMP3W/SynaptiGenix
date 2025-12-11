@@ -1,32 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<link rel="icon" href="Images/favicon.png" type="Image/x-icon">
-<link rel="shortcut icon" href="Images/favicon.png" type="Image/x-icon">
-
-
 <meta charset="utf-8" />
-  <!-- Meta Description -->
-  <meta name="description" content="SynaptiGenix est une plateforme open-source de génération de données synthétiques multimodales (texte, 3D, audio, vidéo) pour l’IA. Fiabilité, conformité RGPD/HIPAA et scalabilité industrielle.">
-
-  <!-- Keywords -->
-  <meta name="keywords" content="SynaptiGenix, données synthétiques, IA, intelligence artificielle, machine learning, deep learning, multimodal, dataset, open-source, Vercel, GitHub">
-
-  <!-- Author -->
-  <meta name="author" content="OLYMP3W">
-
-  <!-- Open Graph (Facebook, LinkedIn) -->
-  <meta property="og:title" content="SynaptiGenix | Données Synthétiques pour l’IA">
-  <meta property="og:description" content="Plateforme de données synthétiques multimodales pour l’IA : texte, 3D, audio, vidéo. Fiabilité et conformité garanties.">
-  <meta property="og:url" content="https://synapti-genix.vercel.app">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://synapti-genix.vercel.app/preview.png">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SynaptiGenix | Données Synthétiques pour l’IA">
-  <meta name="twitter:description" content="Découvrez SynaptiGenix, une plateforme de données synthétiques multimodales pour l’IA.">
-  <meta name="twitter:image" content="https://synapti-genix.vercel.app/preview.png">
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>SynaptiGenix | Données Synthétiques Autonomes et Évolutives</title>
 <meta name="description" content="SynaptiGenix — Plateforme multi-modale de données synthétiques avec validation Jarris. Fiabilité, scalabilité et conformité pour l'IA." />
@@ -220,6 +195,30 @@
   @keyframes slideIn { 
     from { transform: translate(100%, 100%); opacity: 0; } 
     to { transform: translate(0, 0); opacity: 1; } 
+  }
+
+  /* Améliorations responsives supplémentaires */
+  @media (max-width: 768px) {
+    .hero { padding: 2rem 1rem; gap: 1.5rem; }
+    .hero-left { min-width: 100%; }
+    .hero-right { min-width: 100%; flex: 1 1 auto; }
+    .title { font-size: clamp(1.5rem, 8vw, 2.8rem); }
+    .sub { font-size: 0.95rem; }
+    .video-box { box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .grid-3 { grid-template-columns: 1fr; }
+    .roadmap { flex-direction: column; overflow: visible; scroll-snap-type: none; }
+    .roadmap .item { min-width: 100%; }
+    .team-member img { width: 100px; height: 100px; }
+    .team-member { padding: 1rem; }
+    footer { text-align: center; }
+    .modal { width: 96%; padding: 1rem; }
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 1.5rem 0.5rem; }
+    .btn-white, .btn-ghost { font-size: 0.9rem; padding: 0.4rem 0.8rem; }
+    .faq-question { font-size: 0.95rem; }
+    .faq-answer p { font-size: 0.9rem; }
   }
 </style>
 </head>
@@ -419,7 +418,7 @@
     <div class="roadmap mt-6">
       <!-- Roadmap items use stagger-item -->
       <div class="item stagger-item" data-delay="0.1">
-        <div class="flex items-center gap-3 mb-3"><div class="road-dot"></div><strong>Q4 2026</strong></div>
+        <div class="flex items-center gap-3 mb-3"><div class="road-dot"></div><strong>Q4 2025</strong></div>
         <div class="text-subtle mb-3">Alpha public Jarris — API d'audit pour partenaires.</div>
         <a href="#" onclick="openModal('q42025')" class="text-white font-semibold">En savoir plus →</a>
       </div>
@@ -799,11 +798,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
