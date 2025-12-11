@@ -196,6 +196,30 @@
     from { transform: translate(100%, 100%); opacity: 0; } 
     to { transform: translate(0, 0); opacity: 1; } 
   }
+
+  /* Améliorations responsives supplémentaires */
+  @media (max-width: 768px) {
+    .hero { padding: 2rem 1rem; gap: 1.5rem; flex-direction: column-reverse; }
+    .hero-left { min-width: 100%; }
+    .hero-right { min-width: 100%; flex: 1 1 auto; }
+    .title { font-size: clamp(1.5rem, 8vw, 2.8rem); }
+    .sub { font-size: 0.95rem; }
+    .video-box { box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .grid-3 { grid-template-columns: 1fr; }
+    .roadmap { flex-direction: column; overflow: visible; scroll-snap-type: none; }
+    .roadmap .item { min-width: 100%; }
+    .team-member img { width: 100px; height: 100px; }
+    .team-member { padding: 1rem; }
+    footer { text-align: center; }
+    .modal { width: 96%; padding: 1rem; }
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 1.5rem 0.5rem; }
+    .btn-white, .btn-ghost { font-size: 0.9rem; padding: 0.4rem 0.8rem; }
+    .faq-question { font-size: 0.95rem; }
+    .faq-answer p { font-size: 0.9rem; }
+  }
 </style>
 </head>
 <body class="antialiased">
